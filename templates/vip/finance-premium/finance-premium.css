@@ -1,0 +1,57 @@
+* {margin: 0; padding: 0; box-sizing: border-box;}
+:root {--gold: #d4af37; --dark: #1a202c; --darker: #0a0a0a;}
+body {font-family: Georgia, serif; color: #f5f5f5; background: var(--darker);}
+.container {max-width: 1200px; margin: 0 auto; padding: 0 2rem;}
+.header {background: var(--dark); padding: 1.5rem 0; border-bottom: 1px solid rgba(212, 175, 55, 0.2); position: sticky; top: 0; z-index: 100;}
+.header .container {display: flex; justify-content: space-between; align-items: center;}
+.logo {font-size: 1.25rem; font-weight: bold; color: var(--gold); letter-spacing: 2px;}
+nav {display: flex; gap: 2.5rem;}
+nav a {color: #f5f5f5; text-decoration: none; font-size: 0.9rem; transition: color 0.3s;}
+nav a:hover {color: var(--gold);}
+.btn-consult {padding: 0.75rem 1.5rem; background: var(--gold); color: var(--darker); border: none; border-radius: 8px; font-weight: 600; cursor: pointer;}
+.hero {padding: 8rem 0; background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); position: relative; overflow: hidden;}
+.hero-bg {position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.1), transparent); opacity: 0.5;}
+.hero-content {position: relative; z-index: 1; max-width: 800px;}
+.badge {display: inline-block; padding: 0.5rem 1.5rem; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); border-radius: 50px; color: var(--gold); font-size: 0.875rem; margin-bottom: 2rem;}
+.hero h1 {font-size: 3.5rem; margin-bottom: 1.5rem; color: #f5f5f5;}
+.hero p {font-size: 1.25rem; color: rgba(245, 245, 245, 0.8); margin-bottom: 3rem;}
+.hero-stats {display: flex; gap: 4rem; margin-bottom: 3rem;}
+.hero-stats div {display: flex; flex-direction: column;}
+.hero-stats strong {font-size: 2.5rem; color: var(--gold);}
+.hero-stats span {color: rgba(245, 245, 245, 0.6); font-size: 0.875rem;}
+.btn-primary {padding: 1.25rem 2.5rem; background: linear-gradient(135deg, var(--gold), #ffd700); color: var(--darker); border: none; border-radius: 8px; font-weight: 600; font-size: 1.125rem; cursor: pointer; transition: transform 0.3s;}
+.btn-primary:hover {transform: translateY(-2px);}
+.services {padding: 6rem 0; background: var(--dark);}
+.section-header {text-align: center; margin-bottom: 4rem;}
+.section-tag {display: inline-block; padding: 0.5rem 1rem; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); border-radius: 50px; color: var(--gold); font-size: 0.875rem; margin-bottom: 1rem;}
+.section-header h2 {font-size: 2.5rem; color: #f5f5f5;}
+.services-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;}
+.service-card {padding: 3rem; background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 16px; text-align: center; transition: all 0.3s;}
+.service-card:hover {border-color: var(--gold); transform: translateY(-10px);}
+.service-icon {font-size: 4rem; margin-bottom: 1.5rem;}
+.service-card h3 {font-size: 1.75rem; color: var(--gold); margin-bottom: 1rem;}
+.service-card p {color: rgba(245, 245, 245, 0.7); margin-bottom: 2rem; line-height: 1.8;}
+.btn-service {width: 100%; padding: 1rem; background: transparent; color: var(--gold); border: 2px solid var(--gold); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s;}
+.btn-service:hover {background: var(--gold); color: var(--darker);}
+.about {padding: 6rem 0; background: var(--darker);}
+.about-content {display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;}
+.about-left h2 {font-size: 2.5rem; color: var(--gold); margin-bottom: 1.5rem;}
+.about-left p {color: rgba(245, 245, 245, 0.8); line-height: 1.8; margin-bottom: 2rem;}
+.benefits {list-style: none;}
+.benefits li {padding: 0.75rem 0; color: rgba(245, 245, 245, 0.9); font-size: 1.125rem;}
+.about-visual {height: 400px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05)); border-radius: 16px;}
+.contact {padding: 6rem 0; background: var(--dark);}
+.contact-card {max-width: 600px; margin: 0 auto; padding: 4rem; background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 24px; text-align: center;}
+.contact-card h2 {font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem;}
+.contact-card p {color: rgba(245, 245, 245, 0.7); margin-bottom: 2rem;}
+.contact-form {display: flex; flex-direction: column; gap: 1.5rem;}
+.contact-form input, .contact-form select {padding: 1.25rem; background: rgba(245, 245, 245, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 8px; color: #f5f5f5; font-size: 1rem;}
+.footer {background: var(--darker); padding: 2rem 0; text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.2);}
+.footer p {color: rgba(245, 245, 245, 0.6); margin-top: 0.5rem;}
+@media (max-width: 768px) {
+    nav {display: none;}
+    .hero h1 {font-size: 2.5rem;}
+    .hero-stats {flex-direction: column; gap: 2rem;}
+    .services-grid {grid-template-columns: 1fr;}
+    .about-content {grid-template-columns: 1fr;}
+}

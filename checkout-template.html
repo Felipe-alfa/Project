@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprar Template VIP - Leadify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .logo-box {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 1.25rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .back-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .checkout-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-subtitle {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Checkout Grid */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2rem;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Template Preview Card */
+        .template-preview-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .preview-icon {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .preview-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .preview-info p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.875rem;
+        }
+
+        .template-visual {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .template-visual-header {
+            height: 40px;
+            border-radius: 0.5rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        }
+
+        .template-visual-hero {
+            flex: 1;
+            border-radius: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .template-visual-content {
+            height: 60px;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .template-description {
+            margin-bottom: 2rem;
+        }
+
+        .template-description h3 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        .template-description p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .template-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .check-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-icon svg {
+            width: 0.75rem;
+            height: 0.75rem;
+            fill: white;
+        }
+
+        /* Quantity Selector */
+        .quantity-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-section h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quantity-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            color: #fff;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .quantity-display {
+            flex: 1;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Payment Card */
+        .payment-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .payment-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-section {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .price-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #FFD700;
+            line-height: 1;
+        }
+
+        .price-note {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5rem;
+        }
+
+        .order-summary {
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.25rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            margin-bottom: 2rem;
+        }
+
+        .payment-methods h4 {
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .method-card {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .method-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .method-card.active {
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.15);
+        }
+
+        .method-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .method-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Form */
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input {
+            padding: 0.875rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #FFD700;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Buttons */
+        .checkout-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Security */
+        .security-badges {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .security-badge svg {
+            width: 1rem;
+            height: 1rem;
+            fill: #10b981;
+        }
+
+        /* Success Modal */
+        .success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .success-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .success-content {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            max-width: 500px;
+            text-align: center;
+            color: #1a202c;
+        }
+
+        .success-icon {
+            width: 4rem;
+            height: 4rem;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .success-icon svg {
+            width: 2.5rem;
+            height: 2.5rem;
+            fill: white;
+        }
+
+        .success-content h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-content p {
+            color: #4a5568;
+            margin-bottom: 2rem;
+        }
+
+        .success-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .success-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .checkout-title {
+                font-size: 2rem;
+            }
+
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container" onclick="window.location.href='index.html'">
+            <div class="logo-box">LD</div>
+            <span class="logo-text">Leadify</span>
+        </div>
+
+        <button class="back-btn" onclick="window.location.href='index.html'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            <span>Voltar</span>
+        </button>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="checkout-header">
+            <div class="checkout-badge">
+                <span>👑</span>
+                <span>TEMPLATE VIP</span>
+            </div>
+            <h1 class="checkout-title">Comprar Template Premium</h1>
+            <p class="checkout-subtitle">Templates exclusivos e profissionais para sua landing page</p>
+        </div>
+
+        <div class="checkout-grid">
+            <!-- Template Preview -->
+            <div class="template-preview-card">
+                <div class="preview-header">
+                    <div class="preview-icon" id="templateIcon">🏨</div>
+                    <div class="preview-info">
+                        <h2 id="templateName">Luxury Hotel Premium</h2>
+                        <p>Template Premium</p>
+                    </div>
+                </div>
+
+                <div class="template-visual">
+                    <div class="template-visual-header"></div>
+                    <div class="template-visual-hero"></div>
+                    <div class="template-visual-content"></div>
+                </div>
+
+                <div class="template-description">
+                    <h3>Sobre este template</h3>
+                    <p id="templateDescription">Template exclusivo para hotéis de luxo com design sofisticado, galeria de fotos e sistema de reservas integrado.</p>
+
+                    <div class="template-features">
+                        <div class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Design Premium e Exclusivo</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Totalmente Personalizável</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Código HTML Limpo</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Responsivo para Mobile</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Suporte Dedicado</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Atualizações Gratuitas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quantity-section">
+                    <h3>Quantidade de Templates</h3>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn" onclick="decreaseQuantity()">−</button>
+                        <div class="quantity-display" id="quantity">1</div>
+                        <button class="quantity-btn" onclick="increaseQuantity()">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Card -->
+            <div class="payment-card">
+                <h3>Resumo do Pedido</h3>
+
+                <div class="price-section">
+                    <div class="price-label">Valor do Template</div>
+                    <div class="price-value">R$ <span id="totalPrice">10</span></div>
+                    <div class="price-note">Pagamento único • Acesso vitalício</div>
+                </div>
+
+                <div class="order-summary">
+                    <div class="summary-item">
+                        <span>Template:</span>
+                        <span id="summaryTemplate">Luxury Hotel</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Quantidade:</span>
+                        <span id="summaryQuantity">1</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Valor unitário:</span>
+                        <span>R$ 10,00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total:</span>
+                        <span>R$ <span id="summaryTotal">10,00</span></span>
+                    </div>
+                </div>
+
+                <div class="payment-methods">
+                    <h4>Método de Pagamento</h4>
+                    <div class="methods-grid">
+                        <div class="method-card active" onclick="selectMethod(this, 'pix')">
+                            <div class="method-icon">📱</div>
+                            <div class="method-name">PIX</div>
+                        </div>
+                        <div class="method-card" onclick="selectMethod(this, 'card')">
+                            <div class="method-icon">💳</div>
+                            <div class="method-name">Cartão</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-form" id="cardForm" style="display: none;">
+                    <div class="form-group">
+                        <label>Nome no Cartão</label>
+                        <input type="text" placeholder="João Silva">
+                    </div>
+                    <div class="form-group">
+                        <label>Número do Cartão</label>
+                        <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Validade</label>
+                            <input type="text" placeholder="MM/AA" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-form">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>CPF</label>
+                        <input type="text" placeholder="000.000.000-00" maxlength="14">
+                    </div>
+                </div>
+
+                <button class="checkout-btn" onclick="processPayment()">
+                    Finalizar Compra - R$ <span id="btnPrice">10,00</span>
+                </button>
+
+                <div class="security-badges">
+                    <div class="security-badge">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="currentColor"/></svg>
+                        <span>Pagamento Seguro</span>
+                    </div>
+                    <div class="security-badge">
+                        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="currentColor"/></svg>
+                        <span>SSL 256-bit</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+            </div>
+            <h2>Pagamento Aprovado! 🎉</h2>
+            <p>Seu template foi liberado e já está disponível em "Meus Templates". Você pode começar a usar agora mesmo!</p>
+            <button class="success-btn" onclick="goToEditor()">Ir para o Editor</button>
+        </div>
+    </div>
+
+    <script>
+        // Get template from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const templateName = urlParams.get('template');
+
+        // Template Info
+        const templateInfo = {
+            luxuryHotel: {
+                name: 'Luxury Hotel Premium',
+                icon: '🏨',
+                description: 'Template exclusivo para hotéis de luxo com design sofisticado, galeria de fotos e sistema de reservas integrado.'
+            },
+            techStartup: {
+                name: 'Tech Startup Pro',
+                icon: '🚀',
+                description: 'Perfeito para startups de tecnologia com visual moderno, seções de produtos e área para investidores.'
+            },
+            fashionBrand: {
+                name: 'Fashion Elite',
+                icon: '👗',
+                description: 'Design elegante para marcas de moda com galeria de produtos, lookbook e integração com e-commerce.'
+            },
+            medicalClinic: {
+                name: 'Medical Pro',
+                icon: '⚕️',
+                description: 'Template profissional para clínicas médicas com agendamento online e área de especialidades.'
+            },
+            financeApp: {
+                name: 'Finance Premium',
+                icon: '💰',
+                description: 'Design confiável para serviços financeiros com calculadoras e seção de investimentos.'
+            },
+            realEstate: {
+                name: 'Real Estate Luxo',
+                icon: '🏠',
+                description: 'Template exclusivo para imobiliárias de alto padrão com galeria de imóveis e tours virtuais.'
+            },
+            // Novos templates VIP de profissões
+            barbeiro: {
+                name: 'Barbearia Premium',
+                icon: '✂️',
+                description: 'Template profissional para barbeiros com agendamento online, galeria de serviços e depoimentos.'
+            },
+            eletricista: {
+                name: 'Eletricista Pro',
+                icon: '⚡',
+                description: 'Landing page para eletricistas com portfólio de serviços, orçamento online e atendimento 24h.'
+            },
+            manicure: {
+                name: 'Nail Studio',
+                icon: '💅',
+                description: 'Design elegante para designers de unhas com galeria de trabalhos e sistema de agendamento.'
+            },
+            personal: {
+                name: 'Fit Pro Personal',
+                icon: '💪',
+                description: 'Template moderno para personal trainers com planos de treino e área de depoimentos.'
+            },
+            fotografo: {
+                name: 'Photo Studio',
+                icon: '📸',
+                description: 'Portfólio profissional para fotógrafos com galeria interativa e formulário de contato.'
+            },
+            marmitas: {
+                name: 'Fit Meals',
+                icon: '🥗',
+                description: 'Landing page para marmitas fitness com cardápio, planos e sistema de pedidos.'
+            }
+        };
+
+        // Set template info
+        if (templateName && templateInfo[templateName]) {
+            const template = templateInfo[templateName];
+            document.getElementById('templateName').textContent = template.name;
+            document.getElementById('templateIcon').textContent = template.icon;
+            document.getElementById('templateDescription').textContent = template.description;
+            document.getElementById('summaryTemplate').textContent = template.name;
+        }
+
+        let quantity = 1;
+        const unitPrice = 10;
+
+        // Quantity functions
+        function increaseQuantity() {
+            if (quantity < 10) {
+                quantity++;
+                updateQuantity();
+            }
+        }
+
+        function decreaseQuantity() {
+            if (quantity > 1) {
+                quantity--;
+                updateQuantity();
+            }
+        }
+
+        function updateQuantity() {
+            const total = (quantity * unitPrice).toFixed(2);
+            document.getElementById('quantity').textContent = quantity;
+            document.getElementById('summaryQuantity').textContent = quantity;
+            document.getElementById('totalPrice').textContent = quantity * unitPrice;
+            document.getElementById('summaryTotal').textContent = total;
+            document.getElementById('btnPrice').textContent = total;
+        }
+
+        // Payment method selection
+        let selectedMethod = 'pix';
+
+        function selectMethod(element, method) {
+            document.querySelectorAll('.method-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            element.classList.add('active');
+            selectedMethod = method;
+
+            const cardForm = document.getElementById('cardForm');
+            if (method === 'card') {
+                cardForm.style.display = 'flex';
+            } else {
+                cardForm.style.display = 'none';
+            }
+        }
+
+        // Process payment
+        function processPayment() {
+            // Simulate payment processing
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Processando...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                // Save to localStorage
+                const purchasedTemplates = JSON.parse(localStorage.getItem('purchasedTemplates') || '[]');
+                for (let i = 0; i < quantity; i++) {
+                    if (!purchasedTemplates.includes(templateName)) {
+                        purchasedTemplates.push(templateName);
+                    }
+                }
+                localStorage.setItem('purchasedTemplates', JSON.stringify(purchasedTemplates));
+
+                // Show success modal
+                document.getElementById('successModal').classList.add('active');
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }, 2000);
+        }
+
+        // Go to editor
+        function goToEditor() {
+            // Load template configuration
+            const templates = {
+                luxuryHotel: { logoText: 'LH', brandName: 'Luxury Hotel', logoColor: '#d4af37', heroTitle: '✨ Experiência Incomparável em Hospedagem' },
+                techStartup: { logoText: 'TS', brandName: 'Tech Startup Pro', logoColor: '#667eea', heroTitle: '🚀 Transforme Seu Negócio com Tecnologia de Ponta' },
+                fashionBrand: { logoText: 'FB', brandName: 'Fashion Elite', logoColor: '#1a1a1a', heroTitle: '👗 Alta Costura' },
+                medicalClinic: { logoText: 'MC', brandName: 'Medical Pro', logoColor: '#3182ce', heroTitle: '⚕️ Cuidando da Sua Saúde com Excelência' },
+                financeApp: { logoText: 'FN', brandName: 'Finance Premium', logoColor: '#d4af37', heroTitle: '💰 Gestão Patrimonial de Alto Padrão' },
+                realEstate: { logoText: 'RE', brandName: 'Real Estate Luxo', logoColor: '#8b6f47', heroTitle: '🏠 Imóveis de Luxo e Exclusividade' }
+            };
+            
+            // Save template selection
+            localStorage.setItem('selectedTemplate', templateName);
+            
+            // Redirect to EDITOR VIP (not normal editor!)
+            window.location.href = 'editor-vip.html';
+        }
+
+        // Card number formatting
+        document.querySelector('input[placeholder="1234 5678 9012 3456"]')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+
+        // Expiry date formatting
+        document.querySelector('input[placeholder="MM/AA"]')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // CPF formatting
+        document.querySelector('input[placeholder="000.000.000-00"]')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos - Leadify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1a202c;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 1.5rem 3rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .logo-box {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        /* Profile Button */
+        .profile-btn {
+            position: relative;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .profile-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-btn svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            fill: white;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 3.5rem;
+            right: 0;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            padding: 1rem;
+            min-width: 280px;
+            display: none;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .dropdown-item {
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .dropdown-item svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .dropdown-item span {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #4a5568;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 3rem;
+            align-items: start;
+            margin-bottom: 4rem;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .benefit-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-icon svg {
+            width: 2rem;
+            height: 2rem;
+            fill: white;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .benefit-card p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* Pricing Cards */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.08) translateY(-10px);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-description {
+            color: #4a5568;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            color: #4a5568;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-icon svg {
+            width: 0.75rem;
+            height: 0.75rem;
+            fill: white;
+        }
+
+        .plan-button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .plan-button.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .plan-button.primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .plan-button.secondary {
+            background: #f7fafc;
+            color: #1a202c;
+            border: 2px solid #e2e8f0;
+        }
+
+        .plan-button.secondary:hover {
+            background: #edf2f7;
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .payment-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .payment-content {
+            background: white;
+            border-radius: 1.5rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .payment-header {
+            padding: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .payment-header h2 {
+            font-size: 1.75rem;
+        }
+
+        .close-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: none;
+            background: #f7fafc;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #edf2f7;
+            transform: rotate(90deg);
+        }
+
+        .payment-body {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .payment-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: #4a5568;
+        }
+
+        .form-group input {
+            padding: 0.875rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-method-card {
+            padding: 1rem;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .payment-method-card:hover {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+
+        .payment-method-card.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .payment-method-icon {
+            width: 3rem;
+            height: 2rem;
+            object-fit: contain;
+        }
+
+        .payment-method-name {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .order-summary {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 1rem;
+        }
+
+        .order-summary h3 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.25rem;
+            padding-top: 1rem;
+        }
+
+        .security-badges {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: #f0fdf4;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            color: #059669;
+        }
+
+        .security-badge svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: #059669;
+        }
+
+        .payment-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .payment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Profile Modal */
+        .profile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .profile-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .profile-content {
+            background: white;
+            border-radius: 1.5rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .profile-header {
+            padding: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-body {
+            padding: 2rem;
+        }
+
+        .profile-section {
+            margin-bottom: 2rem;
+        }
+
+        .profile-section h3 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 4rem 2rem;
+            border-radius: 2rem;
+            text-align: center;
+            color: white;
+            margin-top: 4rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            padding: 1.25rem 3rem;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .benefits-section {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-container {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .payment-body {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container" onclick="window.location.href='index.html'">
+            <div class="logo-box">LD</div>
+            <span class="logo-text">Leadify</span>
+        </div>
+
+        <div style="position: relative;">
+            <button class="profile-btn" onclick="toggleDropdown()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+            </button>
+
+            <div class="dropdown-menu" id="dropdownMenu">
+                <div class="dropdown-grid" id="dropdownContent">
+                    <!-- Conteúdo dinâmico baseado no login -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">Escolha o plano ideal para criar e divulgar sua landing page</h1>
+            <p class="hero-subtitle">Crie sua presença digital em minutos, sem precisar de design ou programação.</p>
+        </div>
+
+        <!-- Benefits + Pricing Section -->
+        <div class="benefits-section">
+            <!-- Left Benefit -->
+            <div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53C16.17 17.98 14.21 19 12 19z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Rápido e Fácil</h3>
+                    <p>Crie sua landing page em minutos com nossos templates prontos e editor intuitivo.</p>
+                </div>
+
+                <div class="benefit-card" style="margin-top: 2rem;">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>100% Personalizável</h3>
+                    <p>Ajuste cores, textos, imagens e layout do jeito que você quiser.</p>
+                </div>
+            </div>
+
+            <!-- Pricing Cards -->
+            <div class="pricing-container">
+                <!-- Plano Inicial -->
+                <div class="pricing-card">
+                    <h3 class="plan-name">Plano Inicial</h3>
+                    <p class="plan-description">Para quem está começando</p>
+                    <div class="plan-price">Grátis</div>
+                    <p class="price-period">Para sempre</p>
+
+                    <ul class="plan-features">
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>1 landing page ativa</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Templates básicos</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Subdomínio gratuito</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Suporte básico</span>
+                        </li>
+                    </ul>
+
+                    <button class="plan-button secondary" onclick="openPayment('Inicial', 'Grátis')">Começar agora</button>
+                </div>
+
+                <!-- Plano Pro (Destaque) -->
+                <div class="pricing-card featured">
+                    <div class="featured-badge">✨ Mais escolhido</div>
+                    <h3 class="plan-name">Plano Pro</h3>
+                    <p class="plan-description">Ideal para profissionais e microempresas</p>
+                    <div class="plan-price">R$ 29</div>
+                    <p class="price-period">por mês</p>
+
+                    <ul class="plan-features">
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Até 3 landing pages ativas</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Templates premium</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Sem marca da plataforma</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Integração WhatsApp</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Suporte prioritário</span>
+                        </li>
+                    </ul>
+
+                    <button class="plan-button primary" onclick="openPayment('Pro', 'R$ 29,00')">Criar minha landing page</button>
+                </div>
+
+                <!-- Plano Business -->
+                <div class="pricing-card">
+                    <h3 class="plan-name">Plano Business</h3>
+                    <p class="plan-description">Para empresas que querem escalar</p>
+                    <div class="plan-price">R$ 79</div>
+                    <p class="price-period">por mês</p>
+
+                    <ul class="plan-features">
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Landing pages ilimitadas</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Domínio próprio</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Destaque na vitrine</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Analytics básico</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
+                            </div>
+                            <span>Suporte premium</span>
+                        </li>
+                    </ul>
+
+                    <button class="plan-button secondary" onclick="openPayment('Business', 'R$ 79,00')">Começar no Business</button>
+                </div>
+            </div>
+
+            <!-- Right Benefit -->
+            <div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>100% Seguro</h3>
+                    <p>Seus dados e páginas protegidos com criptografia de ponta.</p>
+                </div>
+
+                <div class="benefit-card" style="margin-top: 2rem;">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Suporte Dedicado</h3>
+                    <p>Nossa equipe está pronta para ajudar você a ter sucesso.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Pronto para criar sua landing page?</h2>
+            <p>Junte-se a milhares de profissionais que já transformaram suas ideias em realidade</p>
+            <button class="cta-button" onclick="openPayment('Pro', 'R$ 29,00')">Começar agora gratuitamente</button>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <div class="payment-header">
+                <h2>Finalizar Pagamento</h2>
+                <button class="close-btn" onclick="closePayment()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="payment-body">
+                <div class="payment-section">
+                    <h3>Métodos de Pagamento</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method-card active" onclick="selectPaymentMethod(this)">
+                            <svg class="payment-method-icon" viewBox="0 0 48 32"><rect width="48" height="32" rx="4" fill="#1434CB"/><text x="24" y="20" text-anchor="middle" fill="white" font-size="10" font-weight="bold">VISA</text></svg>
+                            <span class="payment-method-name">Visa</span>
+                        </div>
+                        <div class="payment-method-card" onclick="selectPaymentMethod(this)">
+                            <svg class="payment-method-icon" viewBox="0 0 48 32"><circle cx="18" cy="16" r="10" fill="#EB001B"/><circle cx="30" cy="16" r="10" fill="#F79E1B"/></svg>
+                            <span class="payment-method-name">Mastercard</span>
+                        </div>
+                        <div class="payment-method-card" onclick="selectPaymentMethod(this)">
+                            <svg class="payment-method-icon" viewBox="0 0 48 32"><rect width="48" height="32" rx="4" fill="#016FD0"/><text x="24" y="20" text-anchor="middle" fill="white" font-size="8" font-weight="bold">AMEX</text></svg>
+                            <span class="payment-method-name">Amex</span>
+                        </div>
+                        <div class="payment-method-card" onclick="selectPaymentMethod(this)">
+                            <svg class="payment-method-icon" viewBox="0 0 48 32"><rect width="48" height="32" rx="4" fill="#00C3A5"/><text x="24" y="20" text-anchor="middle" fill="white" font-size="10" font-weight="bold">PIX</text></svg>
+                            <span class="payment-method-name">PIX</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nome no Cartão</label>
+                        <input type="text" placeholder="João Silva">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Número do Cartão</label>
+                        <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Validade</label>
+                            <input type="text" placeholder="MM/AA" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="seu@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>CPF</label>
+                        <input type="text" placeholder="000.000.000-00" maxlength="14">
+                    </div>
+                </div>
+
+                <div class="payment-section">
+                    <div class="order-summary">
+                        <h3>Resumo do Pedido</h3>
+                        <div class="summary-item">
+                            <span>Plano:</span>
+                            <span id="selectedPlan">Pro</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Período:</span>
+                            <span>Mensal</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">R$ 29,00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Total:</span>
+                            <span id="totalPrice">R$ 29,00</span>
+                        </div>
+                    </div>
+
+                    <button class="payment-btn" onclick="processPayment()">Finalizar Pagamento</button>
+
+                    <div class="security-badges">
+                        <div class="security-badge">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="currentColor"/>
+                            </svg>
+                            <span>Pagamento Seguro</span>
+                        </div>
+                        <div class="security-badge">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="currentColor"/>
+                            </svg>
+                            <span>SSL 256-bit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-content">
+            <div class="profile-header">
+                <h2>Configurar Perfil</h2>
+                <button class="close-btn" onclick="closeProfile()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="profile-body">
+                <div class="profile-section">
+                    <h3>Dados Pessoais</h3>
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" placeholder="Seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="tel" placeholder="(00) 00000-0000">
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Segurança</h3>
+                    <div class="form-group">
+                        <label>Senha Atual</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label>Nova Senha</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Nova Senha</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Assinatura Atual</h3>
+                    <div class="order-summary">
+                        <div class="summary-item">
+                            <span>Plano:</span>
+                            <span>Pro</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Status:</span>
+                            <span style="color: #10b981;">Ativo</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Próxima cobrança:</span>
+                            <span>21/01/2025</span>
+                        </div>
+                    </div>
+                    <button class="plan-button secondary" style="margin-top: 1rem;">Gerenciar Assinatura</button>
+                </div>
+
+                <button class="payment-btn">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // User Login State (simulado)
+        let isLoggedIn = false;
+
+        // Toggle Dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.classList.toggle('active');
+            updateDropdownContent();
+        }
+
+        // Update Dropdown Content
+        function updateDropdownContent() {
+            const content = document.getElementById('dropdownContent');
+            
+            if (isLoggedIn) {
+                content.innerHTML = `
+                    <div class="dropdown-item" onclick="openProfile()">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <span>Configurar perfil</span>
+                    </div>
+                    <div class="dropdown-item" onclick="window.location.href='index.html'">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        <span>Minhas páginas</span>
+                    </div>
+                    <div class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        <span>Ajuda / Suporte</span>
+                    </div>
+                    <div class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                        <span>Configurações</span>
+                    </div>
+                `;
+            } else {
+                content.innerHTML = `
+                    <div class="dropdown-item" onclick="showLogin()">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <span>Criar conta</span>
+                    </div>
+                    <div class="dropdown-item" onclick="showLogin()">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/></svg>
+                        <span>Entrar</span>
+                    </div>
+                    <div class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        <span>Ajuda / Suporte</span>
+                    </div>
+                    <div class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                        <span>Configurações</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Show Login (simula login)
+        function showLogin() {
+            alert('Funcionalidade de login será implementada em breve!');
+            isLoggedIn = true;
+            toggleDropdown();
+        }
+
+        // Open Payment Modal
+        function openPayment(plan, price) {
+            document.getElementById('selectedPlan').textContent = plan;
+            document.getElementById('subtotal').textContent = price;
+            document.getElementById('totalPrice').textContent = price;
+            document.getElementById('paymentModal').classList.add('active');
+            document.getElementById('dropdownMenu').classList.remove('active');
+        }
+
+        // Close Payment Modal
+        function closePayment() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        // Open Profile Modal
+        function openProfile() {
+            document.getElementById('profileModal').classList.add('active');
+            document.getElementById('dropdownMenu').classList.remove('active');
+        }
+
+        // Close Profile Modal
+        function closeProfile() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        // Select Payment Method
+        function selectPaymentMethod(element) {
+            document.querySelectorAll('.payment-method-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        // Process Payment
+        function processPayment() {
+            alert('Pagamento processado com sucesso! Redirecionando para o editor...');
+            window.location.href = 'index.html';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdownMenu');
+            const profileBtn = document.querySelector('.profile-btn');
+            
+            if (!dropdown.contains(event.target) && !profileBtn.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Close modals when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closePayment();
+            }
+        });
+
+        document.getElementById('profileModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeProfile();
+            }
+        });
+
+        // Card number formatting
+        document.querySelector('input[placeholder="1234 5678 9012 3456"]')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+
+        // Expiry date formatting
+        document.querySelector('input[placeholder="MM/AA"]')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // CPF formatting
+        document.querySelector('input[placeholder="000.000.000-00"]')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

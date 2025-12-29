@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadify - Builder de Landing Pages</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Entry Page -->
+    <div id="entryPage" class="entry-page">
+        <header class="entry-header">
+            <div class="entry-logo-container">
+                <div class="entry-logo-box">
+                    <span class="entry-logo-text">LD</span>
+                </div>
+                <span class="entry-brand">Leadify</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="entry-btn-white" onclick="enterEditor()">
+                    Entrar no Editor
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
+
+                <!-- Profile Button -->
+                <div style="position: relative;">
+                    <button class="profile-btn" onclick="toggleDropdown()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/>
+                        </svg>
+                    </button>
+
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="dropdown-grid" id="dropdownContent">
+                            <!-- Conteúdo dinâmico -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="entry-main">
+            <div class="entry-content">
+                <div class="entry-badge">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <span>Editor Visual de Landing Pages</span>
+                </div>
+
+                <h1 class="entry-title">
+                    Crie landing pages<br>
+                    <span class="entry-title-gradient">profissionais em minutos</span>
+                </h1>
+
+                <p class="entry-subtitle">
+                    Escolha um modelo pronto ou use nosso editor e publique onde quiser. Controle total, liberdade criativa, resultado profissional.
+                </p>
+
+                <div class="entry-cta">
+                    <button class="entry-btn-primary" onclick="enterEditor()">
+                        <span>Começar Agora</span>
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+
+                    <button class="entry-btn-secondary">
+                        <span>Ver Demo</span>
+                    </button>
+                </div>
+
+                <div class="entry-features">
+                    <div class="entry-feature-card">
+                        <div class="feature-icon feature-icon-yellow">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+                            </svg>
+                        </div>
+                        <h3>Templates que convertem</h3>
+                        <p>Economize horas com modelos testados e otimizados</p>
+                    </div>
+
+                    <div class="entry-feature-card">
+                        <div class="feature-icon feature-icon-blue">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                <line x1="3" y1="9" x2="21" y2="9" />
+                                <line x1="9" y1="21" x2="9" y2="9" />
+                            </svg>
+                        </div>
+                        <h3>Liberdade de design</h3>
+                        <p>Customize tudo para refletir sua identidade visual</p>
+                    </div>
+
+                    <div class="entry-feature-card">
+                        <div class="feature-icon feature-icon-purple">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </div>
+                        <h3>Resultados instantâneos</h3>
+                        <p>Publique sua página e comece a gerar leads hoje mesmo</p>
+                    </div>
+                </div>
+
+                <!-- VIP Templates Section -->
+                <section class="vip-templates-section">
+                    <div class="vip-badge">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span>PREMIUM</span>
+                    </div>
+                    <div class="vip-content">
+                        <h2>Templates VIP 💎</h2>
+                        <p>Designs exclusivos e profissionais com customização total. Liberdade criativa para refletir sua marca sem limitações.</p>
+                        
+                        <div class="vip-grid">
+                            <div class="vip-card" onclick="loadTemplate('luxuryHotel')">
+                                <div class="vip-overlay">
+                                    <div class="vip-crown">👑</div>
+                                </div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #d4af37 0%, #f9d423 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);"></div>
+                                    <div class="vip-preview-content" style="background: linear-gradient(135deg, #fff5e1 0%, #ffffff 100%);"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>🏨 Luxury Hotel Premium</h3>
+                                    <p>Sofisticado para hotéis e resorts de luxo</p>
+                                    <div class="vip-features">
+                                        <span>✨ Galeria</span>
+                                        <span>📅 Reservas</span>
+                                        <span>👑 Premium</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('techStartup')">
+                                <div class="vip-overlay">
+                                    <div class="vip-crown">👑</div>
+                                </div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);"></div>
+                                    <div class="vip-preview-content" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>🚀 Tech Startup Pro</h3>
+                                    <p>Moderno e futurista para startups tech</p>
+                                    <div class="vip-features">
+                                        <span>⚡ Performance</span>
+                                        <span>🎯 Conversão</span>
+                                        <span>💫 Impacto Visual</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('fashionBrand')">
+                                <div class="vip-overlay">
+                                    <div class="vip-crown">👑</div>
+                                </div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);"></div>
+                                    <div class="vip-preview-content" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>👗 Fashion Elite</h3>
+                                    <p>Elegante e glamouroso para marcas de moda</p>
+                                    <div class="vip-features">
+                                        <span>💅 Estilo Único</span>
+                                        <span>🌟 Alta Conversão</span>
+                                        <span>🎭 Visual Impactante</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('medicalClinic')">
+                                <div class="vip-overlay">
+                                    <div class="vip-crown">👑</div>
+                                </div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);"></div>
+                                    <div class="vip-preview-content" style="background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>⚕️ Medical Pro</h3>
+                                    <p>Profissional e confiável para clínicas médicas</p>
+                                    <div class="vip-features">
+                                        <span>🏥 Credibilidade</span>
+                                        <span>📋 Agendamento</span>
+                                        <span>💼 Profissional</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('financeApp')">
+                                <div class="vip-overlay">
+                                    <div class="vip-crown">👑</div>
+                                </div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #000046 0%, #1cb5e0 100%);"></div>
+                                    <div class="vip-preview-content" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>💰 Finance Premium</h3>
+                                    <p>Seguro e confiável para fintech e bancos</p>
+                                    <div class="vip-features">
+                                        <span>🔒 Segurança</span>
+                                        <span>📊 Dashboard</span>
+                                        <span>💎 Premium</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('realEstate')">
+                                <div class="vip-overlay">
+                                    <div class="vip-crown">👑</div>
+                                </div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);"></div>
+                                    <div class="vip-preview-content" style="background: linear-gradient(135deg, #e8ede7 0%, #ffffff 100%);"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>🏠 Real Estate Luxo</h3>
+                                    <p>Exclusivo para imobiliárias de alto padrão</p>
+                                    <div class="vip-features">
+                                        <span>🌆 Galeria</span>
+                                        <span>📍 Geolocalização</span>
+                                        <span>✨ Luxuoso</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Botão Ver Mais -->
+                        <div style="text-align: center; margin-top: 3rem;">
+                            <button class="entry-btn-primary" id="btnVerMaisVip" onclick="toggleVerMaisVip()">
+                                <span id="btnVerMaisText">Ver Mais Templates VIP</span>
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="btnVerMaisIcon">
+                                    <path d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIP Professional Templates Section -->
+                <section class="vip-templates-section" id="vipProfessionalSection" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: none;">
+                    <div class="vip-badge">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span>VIP PROFISSÕES</span>
+                    </div>
+                    <div class="vip-content">
+                        <h2>Templates VIP para Profissionais 💼</h2>
+                        <p>Designs especializados para profissionais liberais e prestadores de serviço. Customização total e liberdade criativa.</p>
+                        
+                        <div class="vip-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                            <div class="vip-card" onclick="loadTemplate('barbeiro')">
+                                <div class="vip-overlay"><div class="vip-crown">👑</div></div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #d4a574 0%, #f4d03f 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);"></div>
+                                    <div class="vip-preview-content" style="background: #fff;"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>✂️ Barbearia Premium</h3>
+                                    <p>Para barbeiros e salões masculinos</p>
+                                    <div class="vip-features">
+                                        <span>📅 Agendamento</span>
+                                        <span>💈 Serviços</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('eletricista')">
+                                <div class="vip-overlay"><div class="vip-crown">👑</div></div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #ffc107 0%, #ff6f00 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #1a237e 0%, #283593 100%);"></div>
+                                    <div class="vip-preview-content" style="background: #fff;"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>⚡ Eletricista Pro</h3>
+                                    <p>Para eletricistas e serviços elétricos</p>
+                                    <div class="vip-features">
+                                        <span>24h</span>
+                                        <span>💡 Emergência</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('manicure')">
+                                <div class="vip-overlay"><div class="vip-crown">👑</div></div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #2d132c 0%, #801336 100%);"></div>
+                                    <div class="vip-preview-content" style="background: #fff;"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>💅 Nail Studio</h3>
+                                    <p>Para manicures e designers de unhas</p>
+                                    <div class="vip-features">
+                                        <span>✨ Galeria</span>
+                                        <span>📅 Agendas</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('personal')">
+                                <div class="vip-overlay"><div class="vip-crown">👑</div></div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #ff6b35 0%, #ff9f1c 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #1b1b2f 0%, #162447 100%);"></div>
+                                    <div class="vip-preview-content" style="background: #fff;"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>💪 Fit Pro Personal</h3>
+                                    <p>Para personal trainers e academias</p>
+                                    <div class="vip-features">
+                                        <span>📊 Planos</span>
+                                        <span>🏋️ Treinos</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('fotografo')">
+                                <div class="vip-overlay"><div class="vip-crown">👑</div></div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #e63946 0%, #f18701 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #1d3557 0%, #457b9d 100%);"></div>
+                                    <div class="vip-preview-content" style="background: #fff;"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>📸 Photo Studio</h3>
+                                    <p>Para fotógrafos profissionais</p>
+                                    <div class="vip-features">
+                                        <span>📷 Portfólio</span>
+                                        <span>💒 Eventos</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="vip-card" onclick="loadTemplate('marmitas')">
+                                <div class="vip-overlay"><div class="vip-crown">👑</div></div>
+                                <div class="vip-preview">
+                                    <div class="vip-preview-header" style="background: linear-gradient(135deg, #52b788 0%, #74c69d 100%);"></div>
+                                    <div class="vip-preview-hero" style="background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);"></div>
+                                    <div class="vip-preview-content" style="background: #fff;"></div>
+                                </div>
+                                <div class="vip-info">
+                                    <h3>🥗 Fit Meals</h3>
+                                    <p>Para marmitas fitness e saudáveis</p>
+                                    <div class="vip-features">
+                                        <span>🍱 Cardápio</span>
+                                        <span>📅 Planos</span>
+                                    </div>
+                                    <div class="vip-price">R$ 29,90</div>
+                                    <button class="vip-btn">Comprar Template</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Templates Section -->
+                <section class="templates-section">
+                    <div class="templates-content">
+                        <h2>Templates Gratuitos</h2>
+                        <p>Comece grátis com um template básico. Isso já resolve seu problema!</p>
+                        
+                        <div class="templates-grid">
+                            <div class="template-card" onclick="loadTemplate('business')">
+                                <div class="template-preview">
+                                    <div class="template-preview-header"></div>
+                                    <div class="template-preview-hero"></div>
+                                    <div class="template-preview-content"></div>
+                                </div>
+                                <div class="template-info">
+                                    <h3>Business</h3>
+                                    <p>Perfeito para empresas e serviços profissionais</p>
+                                    <button class="template-btn">Usar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="template-card" onclick="loadTemplate('portfolio')">
+                                <div class="template-preview">
+                                    <div class="template-preview-header"></div>
+                                    <div class="template-preview-hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                                    <div class="template-preview-content"></div>
+                                </div>
+                                <div class="template-info">
+                                    <h3>Portfolio</h3>
+                                    <p>Ideal para designers e criativos mostrarem trabalhos</p>
+                                    <button class="template-btn">Usar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="template-card" onclick="loadTemplate('startup')">
+                                <div class="template-preview">
+                                    <div class="template-preview-header"></div>
+                                    <div class="template-preview-hero" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                                    <div class="template-preview-content"></div>
+                                </div>
+                                <div class="template-info">
+                                    <h3>Startup</h3>
+                                    <p>Moderno e dinâmico para startups e tech</p>
+                                    <button class="template-btn">Usar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="template-card" onclick="loadTemplate('restaurant')">
+                                <div class="template-preview">
+                                    <div class="template-preview-header"></div>
+                                    <div class="template-preview-hero" style="background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);"></div>
+                                    <div class="template-preview-content"></div>
+                                </div>
+                                <div class="template-info">
+                                    <h3>Restaurante</h3>
+                                    <p>Elegante para restaurantes e food service</p>
+                                    <button class="template-btn">Usar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="template-card" onclick="loadTemplate('ecommerce')">
+                                <div class="template-preview">
+                                    <div class="template-preview-header"></div>
+                                    <div class="template-preview-hero" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                                    <div class="template-preview-content"></div>
+                                </div>
+                                <div class="template-info">
+                                    <h3>E-commerce</h3>
+                                    <p>Otimizado para lojas online e produtos</p>
+                                    <button class="template-btn">Usar Template</button>
+                                </div>
+                            </div>
+
+                            <div class="template-card" onclick="loadTemplate('agency')">
+                                <div class="template-preview">
+                                    <div class="template-preview-header"></div>
+                                    <div class="template-preview-hero" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);"></div>
+                                    <div class="template-preview-content"></div>
+                                </div>
+                                <div class="template-info">
+                                    <h3>Agência</h3>
+                                    <p>Profissional para agências digitais</p>
+                                    <button class="template-btn">Usar Template</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="entry-footer">
+            <p>© 2025 Leadify - Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <!-- Editor Page -->
+    <div id="editorPage" class="editor-page" style="display: none;">
+        <header class="editor-header">
+            <div class="header-logo">
+                <div class="logo-box">
+                    <span class="logo-text">LD</span>
+                </div>
+                <span class="brand-name">Leadify Builder</span>
+            </div>
+
+            <nav class="header-nav">
+                <button class="nav-btn" onclick="addSection()">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    <span>Adicionar Seção</span>
+                </button>
+
+                <button class="nav-btn" onclick="exportHTML()">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <span>Exportar HTML</span>
+                </button>
+
+                <button class="nav-btn-primary" onclick="savePage()">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
+                    </svg>
+                    <span>Salvar</span>
+                </button>
+            </nav>
+        </header>
+
+        <div class="editor-container">
+            <!-- Sidebar -->
+            <aside class="editor-sidebar">
+                <button class="sidebar-btn" onclick="exitEditor()" title="Voltar">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    <span>Voltar</span>
+                </button>
+                
+                <button class="sidebar-btn" onclick="showPanel('header')" title="Editar Header">
+                    <svg class="icon icon-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="4" rx="1" />
+                    </svg>
+                    <span>Header</span>
+                </button>
+                
+                <button class="sidebar-btn" onclick="showPanel('hero')" title="Editar Hero">
+                    <svg class="icon icon-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                    </svg>
+                    <span>Hero</span>
+                </button>
+                
+                <button class="sidebar-btn" onclick="showPanel('content')" title="Editar Conteúdo">
+                    <svg class="icon icon-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    <span>Conteúdo</span>
+                </button>
+                
+                <button class="sidebar-btn" onclick="showPanel('projects')" title="Editar Projetos">
+                    <svg class="icon icon-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    <span>Projetos</span>
+                </button>
+                
+                <button class="sidebar-btn" onclick="showPanel('footer')" title="Editar Footer">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="17" width="18" height="4" rx="1" />
+                    </svg>
+                    <span>Footer</span>
+                </button>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="editor-main">
+                <!-- Control Panel -->
+                <div class="control-panel">
+                    <div class="panel-header">
+                        <h2 id="panelTitle">Editor de Seções</h2>
+                        <p>Personalize sua landing page</p>
+                    </div>
+
+                    <div class="panel-content" id="controlPanel">
+                        <!-- Header Panel -->
+                        <div id="headerPanel" class="edit-panel">
+                            <section class="panel-section">
+                                <div class="section-header">
+                                    <h3>Logo e Marca</h3>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label>Tipo de Logo</label>
+                                        <select id="logoType" onchange="updateLandingPage()">
+                                            <option value="text">Texto</option>
+                                            <option value="image">Imagem</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Texto da Logo</label>
+                                        <input type="text" id="logoText" value="LD" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>URL da Imagem da Logo</label>
+                                        <input type="text" id="logoImage" value="" placeholder="https://exemplo.com/logo.png" oninput="updateLandingPage()">
+                                        <small>Será exibido se "Tipo de Logo" for "Imagem"</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nome da Marca</label>
+                                        <input type="text" id="brandName" value="Leadify" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor da Logo</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="logoColor" value="#D94140" onchange="updateLandingPage()">
+                                            <input type="text" id="logoColorText" value="#D94140" oninput="syncColor('logoColor')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor de Fundo do Header</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="headerBackgroundColor" value="#06121E" onchange="updateLandingPage()">
+                                            <input type="text" id="headerBackgroundColorText" value="#06121E" oninput="syncColor('headerBackgroundColor')">
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="panel-section">
+                                <div class="section-header">
+                                    <h3>Menu de Navegação</h3>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label>Mostrar Menu</label>
+                                        <select id="showMenu" onchange="updateLandingPage()">
+                                            <option value="false">Não</option>
+                                            <option value="true">Sim</option>
+                                        </select>
+                                    </div>
+                                    <div id="menuItemsContainer"></div>
+                                    <button class="add-project-btn" onclick="addMenuItem()">+ Adicionar Item ao Menu</button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Hero Panel -->
+                        <div id="heroPanel" class="edit-panel" style="display: none;">
+                            <section class="panel-section">
+                                <div class="section-header">
+                                    <h3>Hero Section</h3>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label>Título Principal</label>
+                                        <textarea id="heroTitle" rows="2" oninput="updateLandingPage()">Transforme suas ideias em realidade</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Subtítulo</label>
+                                        <textarea id="heroSubtitle" rows="3" oninput="updateLandingPage()">Crie landing pages profissionais de forma rápida e fácil</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Descrição Adicional (Opcional)</label>
+                                        <textarea id="heroDescription" rows="2" oninput="updateLandingPage()" placeholder="Texto adicional abaixo do subtítulo"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Texto do Botão</label>
+                                        <input type="text" id="heroButtonText" value="Entre em Contato" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link do Botão</label>
+                                        <input type="text" id="heroButtonLink" value="#contato" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor do Botão</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="heroButtonColor" value="#D94140" onchange="updateLandingPage()">
+                                            <input type="text" id="heroButtonColorText" value="#D94140" oninput="syncColor('heroButtonColor')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Botão Secundário - Texto (Opcional)</label>
+                                        <input type="text" id="heroButton2Text" value="" placeholder="Ex: Ver Galeria" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Botão Secundário - Link</label>
+                                        <input type="text" id="heroButton2Link" value="#" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Botão Secundário - Cor</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="heroButton2Color" value="#6b7280" onchange="updateLandingPage()">
+                                            <input type="text" id="heroButton2ColorText" value="#6b7280" oninput="syncColor('heroButton2Color')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>URL da Imagem de Fundo</label>
+                                        <input type="text" id="heroBackgroundImage" value="" placeholder="https://exemplo.com/imagem.jpg" oninput="updateLandingPage()">
+                                        <small>Cole a URL de uma imagem ou deixe vazio para usar gradiente</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>URL da Imagem Lateral (Opcional)</label>
+                                        <input type="text" id="heroImageSide" value="" placeholder="https://exemplo.com/imagem-lateral.jpg" oninput="updateLandingPage()">
+                                        <small>Imagem que aparece ao lado do texto</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor de Fundo (se sem imagem)</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="heroBackgroundColor" value="#06121E" onchange="updateLandingPage()">
+                                            <input type="text" id="heroBackgroundColorText" value="#06121E" oninput="syncColor('heroBackgroundColor')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor do Texto</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="heroTextColor" value="#ffffff" onchange="updateLandingPage()">
+                                            <input type="text" id="heroTextColorText" value="#ffffff" oninput="syncColor('heroTextColor')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Altura Mínima (vh)</label>
+                                        <input type="range" id="heroMinHeight" min="40" max="100" step="5" value="60" oninput="updateHeroHeight()">
+                                        <div class="range-value" id="heroMinHeightValue">60vh</div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Content Panel -->
+                        <div id="contentPanel" class="edit-panel" style="display: none;">
+                            <section class="panel-section">
+                                <div class="section-header">
+                                    <h3>Seção Sobre</h3>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label>Mostrar Seção Sobre</label>
+                                        <select id="showAbout" onchange="updateLandingPage()">
+                                            <option value="true">Sim</option>
+                                            <option value="false">Não</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Título</label>
+                                        <input type="text" id="aboutTitle" value="Sobre Nós" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Descrição</label>
+                                        <textarea id="aboutDescription" rows="5" oninput="updateLandingPage()">Somos especialistas em criar soluções digitais incríveis. Nossa equipe está pronta para transformar suas ideias em realidade.</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>URL da Imagem</label>
+                                        <input type="text" id="aboutImage" value="" placeholder="https://exemplo.com/imagem.jpg" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Posição da Imagem</label>
+                                        <select id="aboutImagePosition" onchange="updateLandingPage()">
+                                            <option value="right">Direita</option>
+                                            <option value="left">Esquerda</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor de Fundo</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="aboutBackgroundColor" value="#06121E" onchange="updateLandingPage()">
+                                            <input type="text" id="aboutBackgroundColorText" value="#06121E" oninput="syncColor('aboutBackgroundColor')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor do Título</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="aboutTitleColor" value="#ffffff" onchange="updateLandingPage()">
+                                            <input type="text" id="aboutTitleColorText" value="#ffffff" oninput="syncColor('aboutTitleColor')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor do Texto</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="aboutTextColor" value="#ffffff" onchange="updateLandingPage()">
+                                            <input type="text" id="aboutTextColorText" value="#ffffff" oninput="syncColor('aboutTextColor')">
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Projects Panel -->
+                        <div id="projectsPanel" class="edit-panel" style="display: none;">
+                            <section class="panel-section">
+                                <div class="section-header">
+                                    <h3>Seção de Projetos</h3>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label>Mostrar Seção de Projetos</label>
+                                        <select id="showProjects" onchange="updateLandingPage()">
+                                            <option value="true">Sim</option>
+                                            <option value="false">Não</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Título da Seção</label>
+                                        <input type="text" id="projectsTitle" value="Nossos Projetos" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor de Fundo</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="projectsBackgroundColor" value="#ffffff" onchange="updateLandingPage()">
+                                            <input type="text" id="projectsBackgroundColorText" value="#ffffff" oninput="syncColor('projectsBackgroundColor')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor do Título</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="projectsTitleColor" value="#232224" onchange="updateLandingPage()">
+                                            <input type="text" id="projectsTitleColorText" value="#232224" oninput="syncColor('projectsTitleColor')">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Número de Projetos</label>
+                                        <input type="number" id="projectsCount" value="6" min="1" max="12" onchange="updateProjectsCount()">
+                                    </div>
+
+                                    <div id="projectsList"></div>
+
+                                    <button class="add-project-btn" onclick="addProject()">+ Adicionar Projeto</button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Footer Panel -->
+                        <div id="footerPanel" class="edit-panel" style="display: none;">
+                            <section class="panel-section">
+                                <div class="section-header">
+                                    <h3>Footer</h3>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label>Texto do Copyright</label>
+                                        <input type="text" id="footerText" value="© 2025 Leadify - Todos os direitos reservados" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor de Fundo</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="footerBackgroundColor" value="#06121E" onchange="updateLandingPage()">
+                                            <input type="text" id="footerBackgroundColorText" value="#06121E" oninput="syncColor('footerBackgroundColor')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cor do Texto</label>
+                                        <div class="color-input-group">
+                                            <input type="color" id="footerTextColor" value="#ffffff" onchange="updateLandingPage()">
+                                            <input type="text" id="footerTextColorText" value="#ffffff" oninput="syncColor('footerTextColor')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mostrar Redes Sociais</label>
+                                        <select id="showSocialLinks" onchange="updateLandingPage()">
+                                            <option value="true">Sim</option>
+                                            <option value="false">Não</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link GitHub</label>
+                                        <input type="text" id="footerGithub" value="#" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link Twitter</label>
+                                        <input type="text" id="footerTwitter" value="#" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link LinkedIn</label>
+                                        <input type="text" id="footerLinkedin" value="#" oninput="updateLandingPage()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link Instagram</label>
+                                        <input type="text" id="footerInstagram" value="#" oninput="updateLandingPage()">
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview -->
+                <div class="preview-container">
+                    <div class="preview-header">
+                        <div class="preview-header-left">
+                            <div class="preview-dots">
+                                <div class="dot dot-red"></div>
+                                <div class="dot dot-yellow"></div>
+                                <div class="dot dot-green"></div>
+                            </div>
+                            <span>Preview da Landing Page</span>
+                        </div>
+                        <div class="preview-header-right">
+                            Atualização em tempo real
+                        </div>
+                    </div>
+
+                    <div class="preview-content" id="landingPreview">
+                        <!-- Landing Page Preview -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="editor-footer">
+            <div class="footer-left">
+                <div class="footer-logo-box">
+                    <span class="footer-logo-text">LD</span>
+                </div>
+                <div class="footer-info">
+                    <span class="footer-brand">Leadify</span>
+                    <span class="footer-copy">© 2025 Leadify - Todos os direitos reservados</span>
+                </div>
+            </div>
+
+            <div class="footer-social">
+                <button class="social-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                    </svg>
+                </button>
+                <button class="social-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+                    </svg>
+                </button>
+                <button class="social-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" />
+                        <circle cx="4" cy="4" r="2" />
+                    </svg>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="editor-profile.js"></script>
+</body>
+
+</html>

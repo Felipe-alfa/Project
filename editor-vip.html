@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor VIP Premium - Leadify</title>
+    <link rel="stylesheet" href="editor-vip.css">
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="header-left">
+            <div class="logo" onclick="window.location.href='index.html'">
+                <div class="logo-box">LD</div>
+                <span class="logo-text">Leadify</span>
+            </div>
+            <div class="divider"></div>
+            <div class="template-info">
+                <span class="vip-badge">👑 VIP</span>
+                <span class="template-name" id="templateNameDisplay">Carregando...</span>
+            </div>
+        </div>
+        
+        <div class="header-center">
+            <div class="device-selector">
+                <button class="device-btn active" data-device="desktop" onclick="changeDevice('desktop')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z"/>
+                    </svg>
+                    Desktop
+                </button>
+                <button class="device-btn" data-device="tablet" onclick="changeDevice('tablet')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 0H6C4.34 0 3 1.34 3 3v18c0 1.66 1.34 3 3 3h12c1.66 0 3-1.34 3-3V3c0-1.66-1.34-3-3-3zm-4 22h-4v-1h4v1zm5.25-3H4.75V3h14.5v16z"/>
+                    </svg>
+                    Tablet
+                </button>
+                <button class="device-btn" data-device="mobile" onclick="changeDevice('mobile')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z"/>
+                    </svg>
+                    Mobile
+                </button>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <button class="btn-icon" onclick="undo()" title="Desfazer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+                </svg>
+            </button>
+            <button class="btn-icon" onclick="redo()" title="Refazer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"/>
+                </svg>
+            </button>
+            <div class="divider"></div>
+            <button class="btn-secondary" onclick="previewTemplate()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                </svg>
+                Preview
+            </button>
+            <button class="btn-secondary" onclick="saveTemplate()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+                </svg>
+                Salvar
+            </button>
+            <button class="btn-primary" onclick="exportTemplate()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/>
+                </svg>
+                Exportar
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Editor Container -->
+    <div class="editor-main">
+        <!-- Left Sidebar - Panels -->
+        <aside class="left-sidebar" id="leftSidebar">
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab active" data-tab="layers" onclick="switchTab('layers')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/>
+                    </svg>
+                    📋 Camadas
+                </button>
+                <button class="sidebar-tab" data-tab="elements" onclick="switchTab('elements')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                    </svg>
+                    ✨ Elementos
+                </button>
+                <button class="sidebar-tab" data-tab="sections" onclick="switchTab('sections')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    </svg>
+                    📐 Seções
+                </button>
+            </div>
+
+            <div class="sidebar-content">
+                <!-- Layers Tab -->
+                <div class="tab-panel active" id="layers-panel">
+                    <div class="panel-header">
+                        <h3>📋 Estrutura da Página</h3>
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                            Visualize todos os elementos da página
+                        </p>
+                        <button class="btn-icon-sm" onclick="refreshLayers()" title="Atualizar">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="layers-tree" id="layersTree">
+                        <!-- Dynamic layers will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Elements Tab -->
+                <div class="tab-panel" id="elements-panel">
+                    <div class="panel-header">
+                        <h3>Adicionar Elementos</h3>
+                    </div>
+                    <div class="elements-grid">
+                        <div class="element-item" draggable="true" data-element="text">
+                            <div class="element-icon">T</div>
+                            <span>Texto</span>
+                        </div>
+                        <div class="element-item" draggable="true" data-element="heading">
+                            <div class="element-icon">H</div>
+                            <span>Título</span>
+                        </div>
+                        <div class="element-item" draggable="true" data-element="button">
+                            <div class="element-icon">▢</div>
+                            <span>Botão</span>
+                        </div>
+                        <div class="element-item" draggable="true" data-element="image">
+                            <div class="element-icon">🖼️</div>
+                            <span>Imagem</span>
+                        </div>
+                        <div class="element-item" draggable="true" data-element="video">
+                            <div class="element-icon">▶</div>
+                            <span>Vídeo</span>
+                        </div>
+                        <div class="element-item" draggable="true" data-element="icon">
+                            <div class="element-icon">★</div>
+                            <span>Ícone</span>
+                        </div>
+                        <div class="element-item" draggable="true" data-element="divider">
+                            <div class="element-icon">―</div>
+                            <span>Divisor</span>
+                        </div>
+                        <div class="element-item" draggable="true" data-element="spacer">
+                            <div class="element-icon">⇅</div>
+                            <span>Espaço</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sections Tab -->
+                <div class="tab-panel" id="sections-panel">
+                    <div class="panel-header">
+                        <h3>Seções Prontas</h3>
+                    </div>
+                    <div class="sections-list">
+                        <div class="section-item" onclick="addSection('hero')">
+                            <div class="section-preview">HERO</div>
+                            <span>Hero Section</span>
+                        </div>
+                        <div class="section-item" onclick="addSection('features')">
+                            <div class="section-preview">FEAT</div>
+                            <span>Features</span>
+                        </div>
+                        <div class="section-item" onclick="addSection('testimonials')">
+                            <div class="section-preview">TEST</div>
+                            <span>Depoimentos</span>
+                        </div>
+                        <div class="section-item" onclick="addSection('cta')">
+                            <div class="section-preview">CTA</div>
+                            <span>Call to Action</span>
+                        </div>
+                        <div class="section-item" onclick="addSection('contact')">
+                            <div class="section-preview">CONT</div>
+                            <span>Contato</span>
+                        </div>
+                        <div class="section-item" onclick="addSection('pricing')">
+                            <div class="section-preview">PREC</div>
+                            <span>Preços</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Canvas -->
+        <div class="center-canvas">
+            <div class="canvas-wrapper" id="canvasWrapper">
+                <iframe id="previewFrame" src="about:blank"></iframe>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - Properties -->
+        <aside class="right-sidebar" id="rightSidebar">
+            <div class="properties-header">
+                <h3>Propriedades</h3>
+                <button class="btn-icon-sm" onclick="closeProperties()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="properties-content" id="propertiesContent">
+                <div class="no-selection">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" opacity="0.3">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <p>Selecione um elemento para editar suas propriedades</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Carregando template VIP...</p>
+    </div>
+
+    <!-- Sistema de Monetização -->
+    <script src="monetization.js"></script>
+    
+    <!-- Editor VIP -->
+    <script src="editor-vip.js"></script>
+</body>
+</html>
