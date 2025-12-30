@@ -371,17 +371,24 @@ const MonetizationSystem = {
         if (!this.config.enableWatermark) return;
         
         const iframe = document.getElementById('previewFrame');
-        if (!iframe) return;
+        if (!iframe) {
+            console.warn('⚠️ Preview frame não encontrado');
+            return;
+        }
         
-        // Aguardar carregamento do iframe
-        iframe.addEventListener('load', () => {
-            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            
-            // Verificar se já existe marca d'água
-            let watermark = iframeDoc.getElementById('leadify-watermark');
-            
-            if (!watermark) {
-                watermark = iframeDoc.createElement('div');
+        // Função para adicionar marca d'água
+        const addWatermark = () => {
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // Remover marca d'água existente
+                const existing = iframeDoc.getElementById('leadify-watermark');
+                if (existing) {
+                    existing.remove();
+                }
+                
+                // Criar nova marca d'água
+                const watermark = iframeDoc.createElement('div');
                 watermark.id = 'leadify-watermark';
                 watermark.innerHTML = `
                     <div class="watermark-content">
@@ -447,10 +454,45 @@ const MonetizationSystem = {
                     }
                 `;
                 
-                iframeDoc.head.appendChild(style);
-                iframeDoc.body.appendChild(watermark);
+                if (!iframeDoc.getElementById('leadify-watermark-style')) {
+                    style.id = 'leadify-watermark-style';
+                    iframeDoc.head.appendChild(style);
+                }
+                
+                if (iframeDoc.body) {
+                    iframeDoc.body.appendChild(watermark);
+                    console.log('💧 Marca d\'água adicionada');
+                } else {
+                    console.warn('⚠️ Body do iframe não encontrado');
+                }
+            } catch (error) {
+                console.error('❌ Erro ao adicionar marca d\'água:', error);
+            }
+        };
+        
+        // Adicionar marca d'água imediatamente se já carregado
+        if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+            addWatermark();
+        }
+        
+        // Também adicionar quando carregar
+        iframe.addEventListener('load', addWatermark);
+        
+        // Observar mudanças no iframe (quando template é recarregado)
+        const observer = new MutationObserver(() => {
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            if (iframeDoc.body && !iframeDoc.getElementById('leadify-watermark')) {
+                setTimeout(addWatermark, 100);
             }
         });
+        
+        // Iniciar observação
+        if (iframe.contentDocument) {
+            observer.observe(iframe.contentDocument, {
+                childList: true,
+                subtree: true
+            });
+        }
     },
 
     // Modal de Upsell da Marca d'Água (2 opções)

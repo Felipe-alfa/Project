@@ -134,28 +134,14 @@ function generateSimpleTemplate() {
     <title>Landing Page</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            line-height: 1.6; 
-            color: #333; 
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #333;
             background: ${config.backgroundColor};
             position: relative;
-        }
-        
-        /* MARCA D'ÁGUA */
-        body::before {
-            content: '';
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 120px;
-            height: 120px;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiByeD0iMTIiIGZpbGw9IiM2NjdlZWEiIGZpbGwtb3BhY2l0eT0iMC4xIi8+Cjx0ZXh0IHg9IjYwIiB5PSI3MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjQwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzY2N2VlYSIgZmlsbC1vcGFjaXR5PSIwLjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkxEPC90ZXh0Pgo8L3N2Zz4=');
-            background-size: contain;
-            background-repeat: no-repeat;
-            opacity: 0.3;
-            pointer-events: none;
-            z-index: 9999;
         }
         
         .container { 
@@ -392,6 +378,13 @@ function loadTemplate() {
     iframeDoc.open();
     iframeDoc.write(templateHTML);
     iframeDoc.close();
+    
+    // Reaplica marca d'água após carregar template
+    setTimeout(() => {
+        if (typeof MonetizationSystem !== 'undefined') {
+            MonetizationSystem.showWatermark();
+        }
+    }, 200);
 }
 
 // Update Functions
@@ -502,6 +495,12 @@ function exportTemplate() {
     const doc = iframe.contentDocument;
     
     if (doc) {
+        // Primeiro, mostrar modal de upsell (se existir MonetizationSystem)
+        if (typeof MonetizationSystem !== 'undefined') {
+            MonetizationSystem.showWatermarkUpsellModal();
+        }
+        
+        // Continuar com a exportação
         const html = doc.documentElement.outerHTML;
         
         const blob = new Blob([html], { type: 'text/html' });
@@ -512,7 +511,7 @@ function exportTemplate() {
         a.click();
         URL.revokeObjectURL(url);
         
-        alert('✅ Template exportado com sucesso!');
+        console.log('✅ Template exportado com marca d\'água');
     }
 }
 
