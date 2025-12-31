@@ -308,7 +308,7 @@ function generateSimpleTemplate() {
 <body>
     <header>
         <div class="container">
-            <div class="logo">Leadify</div>
+            <div class="logo">Vozzy</div>
             <nav>
                 <a href="#home">Início</a>
                 <a href="#features">Recursos</a>
@@ -360,7 +360,7 @@ function generateSimpleTemplate() {
         <div class="container">
             <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
             <p style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.7;">
-                Feito com Leadify
+                Feito com Vozzy
             </p>
         </div>
     </footer>

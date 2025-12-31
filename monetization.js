@@ -1,5 +1,5 @@
 /* ============================================
-   LEADIFY - SISTEMA DE MONETIZAÇÃO
+   VOZZY - SISTEMA DE MONETIZAÇÃO
    Gerencia limites de edição, upsell e marca d'água
    ============================================ */
 
@@ -7,7 +7,7 @@ const MonetizationSystem = {
     // Configurações
     config: {
         maxFreeEdits: 2, // Máximo de edições gratuitas (APENAS Editor Gratuito)
-        watermarkText: 'Leadify',
+        watermarkText: 'Vozzy',
         checkoutUrlRemoveWatermark: 'https://pay.kiwify.com.br/remover-marca-dagua', // R$ 9,99
         checkoutUrlVipPlan: 'https://pay.kiwify.com.br/plano-vip', // Plano VIP completo
         enableWatermark: true,
@@ -45,7 +45,7 @@ const MonetizationSystem = {
     // Obter chave única para o template
     getTemplateKey() {
         const templateId = localStorage.getItem('selectedTemplate') || 'default';
-        return `leadify_edits_${templateId}`;
+        return `vozzy_edits_${templateId}`;
     },
 
     // Obter contador de edições
@@ -382,18 +382,18 @@ const MonetizationSystem = {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                 
                 // Remover marca d'água existente
-                const existing = iframeDoc.getElementById('leadify-watermark');
+                const existing = iframeDoc.getElementById('vozzy-watermark');
                 if (existing) {
                     existing.remove();
                 }
                 
                 // Criar nova marca d'água
                 const watermark = iframeDoc.createElement('div');
-                watermark.id = 'leadify-watermark';
+                watermark.id = 'vozzy-watermark';
                 watermark.innerHTML = `
                     <div class="watermark-content">
                         <span>Made with</span>
-                        <strong>Leadify</strong>
+                        <strong>Vozzy</strong>
                         <button class="watermark-remove-btn" onclick="parent.MonetizationSystem.showWatermarkUpsellModal()" title="Remover marca d'água">
                             ✕
                         </button>
@@ -403,7 +403,7 @@ const MonetizationSystem = {
                 // Adicionar estilos
                 const style = iframeDoc.createElement('style');
                 style.textContent = `
-                    #leadify-watermark {
+                    #vozzy-watermark {
                         position: fixed;
                         bottom: 20px;
                         right: 20px;
@@ -418,21 +418,21 @@ const MonetizationSystem = {
                         backdrop-filter: blur(10px);
                         transition: all 0.3s ease;
                     }
-                    #leadify-watermark:hover {
+                    #vozzy-watermark:hover {
                         transform: translateY(-2px);
                         box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
                     }
-                    #leadify-watermark .watermark-content {
+                    #vozzy-watermark .watermark-content {
                         display: flex;
                         align-items: center;
                         gap: 8px;
                         color: #333;
                     }
-                    #leadify-watermark strong {
+                    #vozzy-watermark strong {
                         color: #667eea;
                         font-weight: 700;
                     }
-                    #leadify-watermark .watermark-remove-btn {
+                    #vozzy-watermark .watermark-remove-btn {
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -447,15 +447,15 @@ const MonetizationSystem = {
                         cursor: pointer;
                         transition: all 0.2s ease;
                     }
-                    #leadify-watermark .watermark-remove-btn:hover {
+                    #vozzy-watermark .watermark-remove-btn:hover {
                         background: #667eea;
                         color: white;
                         transform: rotate(90deg);
                     }
                 `;
                 
-                if (!iframeDoc.getElementById('leadify-watermark-style')) {
-                    style.id = 'leadify-watermark-style';
+                if (!iframeDoc.getElementById('vozzy-watermark-style')) {
+                    style.id = 'vozzy-watermark-style';
                     iframeDoc.head.appendChild(style);
                 }
                 
@@ -481,7 +481,7 @@ const MonetizationSystem = {
         // Observar mudanças no iframe (quando template é recarregado)
         const observer = new MutationObserver(() => {
             const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            if (iframeDoc.body && !iframeDoc.getElementById('leadify-watermark')) {
+            if (iframeDoc.body && !iframeDoc.getElementById('vozzy-watermark')) {
                 setTimeout(addWatermark, 100);
             }
         });
@@ -595,7 +595,7 @@ const MonetizationSystem = {
     removeWatermark() {
         const iframe = document.getElementById('previewFrame');
         if (iframe && iframe.contentDocument) {
-            const watermark = iframe.contentDocument.getElementById('leadify-watermark');
+            const watermark = iframe.contentDocument.getElementById('vozzy-watermark');
             if (watermark) {
                 watermark.remove();
             }

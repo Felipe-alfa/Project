@@ -90,7 +90,7 @@ function showLogin() {
     
     if (login) {
         isLoggedIn = true;
-        alert('✅ Login realizado com sucesso!\n\nBem-vindo ao Leadify! Agora você tem acesso a todas as funcionalidades.');
+        alert('✅ Login realizado com sucesso!\n\nBem-vindo ao Vozzy! Agora você tem acesso a todas as funcionalidades.');
         // Atualiza o dropdown se estiver aberto
         const dropdown = document.getElementById('dropdownMenu');
         if (dropdown && dropdown.classList.contains('active')) {

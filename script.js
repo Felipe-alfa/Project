@@ -4,7 +4,7 @@ const landingConfig = {
     logoType: 'text',
     logoText: 'LD',
     logoImage: '',
-    brandName: 'Leadify',
+    brandName: 'Vozzy',
     logoColor: '#D94140',
     headerBackgroundColor: '#06121E',
     showMenu: 'false',
@@ -53,7 +53,7 @@ const landingConfig = {
     ],
     
     // Footer
-    footerText: '© 2025 Leadify - Todos os direitos reservados',
+    footerText: '© 2025 Vozzy - Todos os direitos reservados',
     footerDescription: '',
     footerBackgroundColor: '#06121E',
     footerTextColor: '#ffffff',
@@ -987,7 +987,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function demoLogin() {
     localStorage.setItem('userLoggedIn', 'true');
     localStorage.setItem('userName', 'Usuário Demo');
-    localStorage.setItem('userEmail', 'demo@leadify.com');
+    localStorage.setItem('userEmail', 'demo@vozzy.com');
     console.log('✅ Login demo ativado!');
     return true;
 }
