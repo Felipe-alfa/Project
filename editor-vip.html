@@ -94,11 +94,11 @@
                     </svg>
                     ✨ Elementos
                 </button>
-                <button class="sidebar-tab" data-tab="sections" onclick="switchTab('sections')">
+                <button class="sidebar-tab" data-tab="colors" onclick="switchTab('colors')">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
                     </svg>
-                    📐 Seções
+                    🎨 Cores
                 </button>
             </div>
 
@@ -162,36 +162,19 @@
                     </div>
                 </div>
 
-                <!-- Sections Tab -->
-                <div class="tab-panel" id="sections-panel">
+                <!-- Colors Tab -->
+                <div class="tab-panel" id="colors-panel">
                     <div class="panel-header">
-                        <h3>Seções Prontas</h3>
+                        <h3>🎨 Personalizar Cores</h3>
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                            Customize as cores do template
+                        </p>
                     </div>
-                    <div class="sections-list">
-                        <div class="section-item" onclick="addSection('hero')">
-                            <div class="section-preview">HERO</div>
-                            <span>Hero Section</span>
-                        </div>
-                        <div class="section-item" onclick="addSection('features')">
-                            <div class="section-preview">FEAT</div>
-                            <span>Features</span>
-                        </div>
-                        <div class="section-item" onclick="addSection('testimonials')">
-                            <div class="section-preview">TEST</div>
-                            <span>Depoimentos</span>
-                        </div>
-                        <div class="section-item" onclick="addSection('cta')">
-                            <div class="section-preview">CTA</div>
-                            <span>Call to Action</span>
-                        </div>
-                        <div class="section-item" onclick="addSection('contact')">
-                            <div class="section-preview">CONT</div>
-                            <span>Contato</span>
-                        </div>
-                        <div class="section-item" onclick="addSection('pricing')">
-                            <div class="section-preview">PREC</div>
-                            <span>Preços</span>
-                        </div>
+                    <div id="colorPanel" style="padding: 1rem;">
+                        <!-- Painel de cores será gerado dinamicamente pelo JS -->
+                        <p style="text-align: center; color: var(--text-muted); padding: 2rem 1rem;">
+                            Carregue um template para personalizar as cores
+                        </p>
                     </div>
                 </div>
             </div>
@@ -230,6 +213,80 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <p>Carregando template VIP...</p>
+    </div>
+
+    <!-- Modal de Configuração de Imagem -->
+    <div class="modal-overlay" id="imageModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🖼️ Configurar Imagem</h3>
+                <button class="btn-icon-sm" onclick="closeImageModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="property-group">
+                    <div class="property-label">URL da Imagem</div>
+                    <input type="text" id="imageUrlInput" class="property-input" placeholder="https://exemplo.com/imagem.jpg">
+                </div>
+                <div class="property-group">
+                    <div class="property-label">Ou faça upload</div>
+                    <input type="file" id="imageFileInput" accept="image/*" class="property-input" onchange="handleImageUpload(event)">
+                    <div id="imagePreview" style="margin-top: 1rem; text-align: center;"></div>
+                </div>
+                <div class="property-group">
+                    <div class="property-label">Texto Alternativo (Alt)</div>
+                    <input type="text" id="imageAltInput" class="property-input" placeholder="Descrição da imagem">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeImageModal()">Cancelar</button>
+                <button class="btn-primary" onclick="applyImageConfig()">✓ Aplicar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Configuração de Vídeo -->
+    <div class="modal-overlay" id="videoModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🎥 Configurar Vídeo</h3>
+                <button class="btn-icon-sm" onclick="closeVideoModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="property-group">
+                    <div class="property-label">Link do YouTube</div>
+                    <input type="text" id="youtubeUrlInput" class="property-input" placeholder="https://www.youtube.com/watch?v=...">
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        Cole o link completo do vídeo do YouTube
+                    </p>
+                </div>
+                <div class="property-group">
+                    <div class="property-label">Ou faça upload de vídeo</div>
+                    <input type="file" id="videoFileInput" accept="video/*" class="property-input" onchange="handleVideoUpload(event)">
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        Formatos: MP4, WebM, OGG
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeVideoModal()">Cancelar</button>
+                <button class="btn-primary" onclick="applyVideoConfig()">✓ Aplicar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Seleção de Emoji -->
+    <div class="modal-overlay" id="emojiModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⭐ Selecionar Ícone</h3>
+                <button class="btn-icon-sm" onclick="closeEmojiModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="emoji-picker" id="emojiPicker">
+                    <!-- Grid de emojis será gerado por JS -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Sistema de Monetização -->
