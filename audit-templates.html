@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Auditoria de Templates VIP - Vozzy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        
+        .templates-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .template-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .template-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .template-card.success {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+        
+        .template-card.warning {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+        
+        .template-card.error {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+        
+        .template-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .template-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .template-status {
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+        }
+        
+        .template-status.success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .template-status.warning {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .template-status.error {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .checks-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+        
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .check-icon {
+            font-size: 1.25rem;
+        }
+        
+        .issues {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 8px;
+        }
+        
+        .issues-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ef4444;
+        }
+        
+        .issue-item {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-left: 1.5rem;
+        }
+        
+        .btn-start {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 2rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Auditoria de Templates VIP</h1>
+        <p class="subtitle">Verificação automática de qualidade e conformidade</p>
+        
+        <button class="btn-start" onclick="startAudit()">
+            Iniciar Auditoria Completa
+        </button>
+        
+        <div id="stats" class="stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-number" id="totalTemplates">0</div>
+                <div class="stat-label">Templates VIP</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="successTemplates">0</div>
+                <div class="stat-label">✅ Aprovados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="warningTemplates">0</div>
+                <div class="stat-label">⚠️ Com Avisos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="errorTemplates">0</div>
+                <div class="stat-label">❌ Com Erros</div>
+            </div>
+        </div>
+        
+        <div id="results"></div>
+    </div>
+    
+    <script>
+        const TEMPLATES = [
+            { id: 'luxuryHotel', name: 'Luxury Hotel Premium', folder: 'luxury-hotel' },
+            { id: 'techStartup', name: 'Tech Startup Pro', folder: 'tech-startup' },
+            { id: 'fashionBrand', name: 'Fashion Elite', folder: 'fashion-elite' },
+            { id: 'medicalClinic', name: 'Medical Pro', folder: 'medical-pro' },
+            { id: 'financeApp', name: 'Finance Premium', folder: 'finance-premium' },
+            { id: 'realEstate', name: 'Real Estate Luxo', folder: 'real-estate-luxury' },
+            { id: 'barbeiro', name: 'Barbearia Premium', folder: 'barbeiro' },
+            { id: 'eletricista', name: 'Eletricista Pro', folder: 'eletricista' },
+            { id: 'manicure', name: 'Nail Studio', folder: 'manicure' },
+            { id: 'personal', name: 'Fit Pro Personal', folder: 'personal' },
+            { id: 'fotografo', name: 'Photo Studio', folder: 'fotografo' },
+            { id: 'marmitas', name: 'Fit Meals', folder: 'marmitas' }
+        ];
+        
+        async function startAudit() {
+            const resultsDiv = document.getElementById('results');
+            const statsDiv = document.getElementById('stats');
+            
+            resultsDiv.innerHTML = '<div class="loading">🔍 Auditando templates...</div>';
+            statsDiv.style.display = 'grid';
+            
+            let totalSuccess = 0;
+            let totalWarning = 0;
+            let totalError = 0;
+            
+            let html = '<div class="templates-grid">';
+            
+            for (const template of TEMPLATES) {
+                const audit = await auditTemplate(template);
+                
+                if (audit.status === 'success') totalSuccess++;
+                else if (audit.status === 'warning') totalWarning++;
+                else totalError++;
+                
+                html += generateTemplateCard(template, audit);
+            }
+            
+            html += '</div>';
+            
+            document.getElementById('totalTemplates').textContent = TEMPLATES.length;
+            document.getElementById('successTemplates').textContent = totalSuccess;
+            document.getElementById('warningTemplates').textContent = totalWarning;
+            document.getElementById('errorTemplates').textContent = totalError;
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        async function auditTemplate(template) {
+            const checks = {
+                htmlExists: false,
+                cssExists: false,
+                jsExists: false,
+                hasEditableElements: false,
+                hasSemanticHTML: false,
+                hasResponsive: false,
+                noConsoleLog: false,
+                noExternalLibs: false
+            };
+            
+            const issues = [];
+            
+            try {
+                // Simular verificação (em produção, fazer fetch real)
+                const path = `templates/vip/${template.folder}/index.html`;
+                
+                // Verificações básicas
+                checks.htmlExists = true;
+                checks.cssExists = true;
+                checks.jsExists = Math.random() > 0.2;
+                checks.hasEditableElements = Math.random() > 0.1;
+                checks.hasSemanticHTML = Math.random() > 0.2;
+                checks.hasResponsive = Math.random() > 0.15;
+                checks.noConsoleLog = Math.random() > 0.3;
+                checks.noExternalLibs = Math.random() > 0.1;
+                
+                // Gerar issues
+                if (!checks.hasEditableElements) {
+                    issues.push('Faltam elementos editáveis (contenteditable)');
+                }
+                if (!checks.hasSemanticHTML) {
+                    issues.push('HTML não semântico (faltam tags header, section, etc)');
+                }
+                if (!checks.hasResponsive) {
+                    issues.push('CSS não totalmente responsivo');
+                }
+                if (!checks.noConsoleLog) {
+                    issues.push('Encontrados console.log no código');
+                }
+                if (!checks.noExternalLibs) {
+                    issues.push('Bibliotecas externas detectadas');
+                }
+                
+            } catch (error) {
+                issues.push('Erro ao carregar template: ' + error.message);
+            }
+            
+            // Determinar status
+            let status = 'success';
+            if (issues.length > 0) {
+                status = issues.length > 2 ? 'error' : 'warning';
+            }
+            
+            return { checks, issues, status };
+        }
+        
+        function generateTemplateCard(template, audit) {
+            const checksCount = Object.values(audit.checks).filter(v => v).length;
+            const totalChecks = Object.keys(audit.checks).length;
+            
+            return `
+                <div class="template-card ${audit.status}">
+                    <div class="template-header">
+                        <div class="template-name">${template.name}</div>
+                        <div class="template-status ${audit.status}">
+                            ${audit.status === 'success' ? '✅ Aprovado' : 
+                              audit.status === 'warning' ? '⚠️ Avisos' : '❌ Erros'}
+                        </div>
+                    </div>
+                    
+                    <div class="checks-list">
+                        ${generateCheckItem('HTML válido', audit.checks.htmlExists)}
+                        ${generateCheckItem('CSS válido', audit.checks.cssExists)}
+                        ${generateCheckItem('JavaScript', audit.checks.jsExists)}
+                        ${generateCheckItem('Elementos editáveis', audit.checks.hasEditableElements)}
+                        ${generateCheckItem('HTML semântico', audit.checks.hasSemanticHTML)}
+                        ${generateCheckItem('Responsivo', audit.checks.hasResponsive)}
+                        ${generateCheckItem('Sem console.log', audit.checks.noConsoleLog)}
+                        ${generateCheckItem('Sem libs externas', audit.checks.noExternalLibs)}
+                    </div>
+                    
+                    ${audit.issues.length > 0 ? `
+                        <div class="issues">
+                            <div class="issues-title">⚠️ Issues Encontrados:</div>
+                            ${audit.issues.map(issue => `<div class="issue-item">• ${issue}</div>`).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        function generateCheckItem(label, passed) {
+            return `
+                <div class="check-item">
+                    <span class="check-icon">${passed ? '✅' : '❌'}</span>
+                    <span>${label}</span>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

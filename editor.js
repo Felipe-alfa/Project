@@ -92,7 +92,10 @@ function initializeEditor() {
         
         // Hide loading
         setTimeout(() => {
-            document.getElementById('loadingOverlay').classList.add('hidden');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'none';
+            }
         }, 500);
         
     } catch (error) {

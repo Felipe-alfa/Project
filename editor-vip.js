@@ -4,12 +4,16 @@
    ============================================ */
 
 // Global State
-const EditorState = {
+window.EditorState = {
     currentTemplate: null,
     selectedElement: null,
     device: 'desktop',
-    isDirty: false
+    isDirty: false,
+    templateName: null
 };
+
+// Referência local para compatibilidade
+const EditorState = window.EditorState;
 
 /* ============================================
    🔄 HISTORY MANAGER - SISTEMA UNDO/REDO
@@ -1372,25 +1376,70 @@ const TemplateColorManager = {
 };
 
 // VIP Templates Configuration - MAPEAMENTO CORRETO COM NOVA ESTRUTURA
-const VIP_TEMPLATES = {
-    luxuryHotel: { name: 'Luxury Hotel Premium', folder: 'luxury-hotel' },
-    techStartup: { name: 'Tech Startup Pro', folder: 'tech-startup' },
-    fashionBrand: { name: 'Fashion Elite', folder: 'fashion-elite' },
-    medicalClinic: { name: 'Medical Pro', folder: 'medical-pro' },
-    financeApp: { name: 'Finance Premium', folder: 'finance-premium' },
-    realEstate: { name: 'Real Estate Luxo', folder: 'real-estate-luxury' },
-    // Novos templates de profissões
-    barbeiro: { name: 'Barbearia Premium', folder: 'barbeiro' },
-    eletricista: { name: 'Eletricista Pro', folder: 'eletricista' },
-    manicure: { name: 'Nail Studio', folder: 'manicure' },
-    personal: { name: 'Fit Pro Personal', folder: 'personal' },
-    fotografo: { name: 'Photo Studio', folder: 'fotografo' },
-    marmitas: { name: 'Fit Meals', folder: 'marmitas' }
-};
+// ⚠️ NÃO sobrescrever se já foi definido (editor-free-config.js)
+if (typeof window.VIP_TEMPLATES === 'undefined') {
+    window.VIP_TEMPLATES = {
+        luxuryHotel: { name: 'Luxury Hotel Premium', folder: 'luxury-hotel' },
+        techStartup: { name: 'Tech Startup Pro', folder: 'tech-startup' },
+        fashionBrand: { name: 'Fashion Elite', folder: 'fashion-elite' },
+        medicalClinic: { name: 'Medical Pro', folder: 'medical-pro' },
+        financeApp: { name: 'Finance Premium', folder: 'finance-premium' },
+        realEstate: { name: 'Real Estate Luxo', folder: 'real-estate-luxury' },
+        // Novos templates de profissões
+        barbeiro: { name: 'Barbearia Premium', folder: 'barbeiro' },
+        eletricista: { name: 'Eletricista Pro', folder: 'eletricista' },
+        manicure: { name: 'Nail Studio', folder: 'manicure' },
+        personal: { name: 'Fit Pro Personal', folder: 'personal' },
+        fotografo: { name: 'Photo Studio', folder: 'fotografo' },
+        marmitas: { name: 'Fit Meals', folder: 'marmitas' }
+    };
+    console.log('✅ VIP_TEMPLATES carregados (12 templates premium)');
+} else {
+    console.log('⚠️ VIP_TEMPLATES já definido (modo FREE com ' + Object.keys(window.VIP_TEMPLATES).length + ' templates)');
+}
+
+// ⚠️ VIP_TEMPLATES está em window.VIP_TEMPLATES (definido em editor-free-config.js ou acima)
+// Não criar constante local para evitar conflito com Object.freeze()
+
+/* ============================================
+   🎨 SELETOR DE TEMPLATES
+   ============================================ */
+function initializeTemplateSelector() {
+    const templateSelector = document.getElementById('templateSelector');
+    if (!templateSelector) return;
+    
+    const currentTemplate = localStorage.getItem('selectedTemplate');
+    let html = '';
+    
+    Object.entries(window.VIP_TEMPLATES).forEach(([key, config]) => {
+        const isActive = key === currentTemplate;
+        html += `
+            <div class="template-card ${isActive ? 'active' : ''}" onclick="switchTemplate('${key}')">
+                <div class="template-card-inner">
+                    <span class="template-card-name">${config.name}</span>
+                    ${isActive ? '<span class="template-card-badge">✓ Ativo</span>' : ''}
+                </div>
+            </div>
+        `;
+    });
+    
+    templateSelector.innerHTML = html;
+    console.log('✅ Seletor de templates inicializado com ' + Object.keys(window.VIP_TEMPLATES).length + ' templates');
+}
+
+function switchTemplate(templateKey) {
+    if (confirm('Trocar template? As alterações não salvas serão perdidas.')) {
+        localStorage.setItem('selectedTemplate', templateKey);
+        window.location.reload();
+    }
+}
 
 // Initialize Editor
 document.addEventListener('DOMContentLoaded', function() {
     console.log('%c👑 Editor VIP Premium Iniciado', 'font-size: 16px; font-weight: bold; color: #667eea;');
+    
+    // Inicializa seletor de templates
+    initializeTemplateSelector();
     
     // Inicializa History Manager
     HistoryManager.init();
@@ -1403,6 +1452,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Inicializa Template Color Manager
     TemplateColorManager.init();
+    
+    // Inicializa Responsive Manager
+    ResponsiveManager.init();
     
     initializeEditor();
 });
@@ -1419,19 +1471,23 @@ async function initializeEditor() {
         }
 
         // Check if template exists in VIP templates
-        const templateConfig = VIP_TEMPLATES[selectedTemplate];
+        const templateConfig = window.VIP_TEMPLATES[selectedTemplate];
         
         if (!templateConfig) {
             showError('Template VIP não encontrado: ' + selectedTemplate);
-            console.error('Templates disponíveis:', Object.keys(VIP_TEMPLATES));
+            console.error('Templates disponíveis:', Object.keys(window.VIP_TEMPLATES));
             setTimeout(() => window.location.href = 'index.html', 3000);
             return;
         }
 
         EditorState.currentTemplate = selectedTemplate;
+        EditorState.templateName = templateConfig.name;
         
         // Update header
-        document.getElementById('templateNameDisplay').textContent = templateConfig.name;
+        const templateNameDisplay = document.getElementById('templateNameDisplay');
+        if (templateNameDisplay) {
+            templateNameDisplay.textContent = templateConfig.name;
+        }
         
         // Load template via iframe.src (SEM FETCH!)
         loadTemplate(templateConfig);
@@ -1439,14 +1495,18 @@ async function initializeEditor() {
         // Initialize editor features
         setupKeyboardShortcuts();
         
-        // Hide loading
-        setTimeout(() => {
-            document.getElementById('loadingOverlay').classList.add('hidden');
-        }, 1000);
+        // NOTA: Loading será escondido automaticamente no iframe.onload (linha ~1477)
+        // NÃO esconder aqui, pois o iframe pode não ter carregado ainda!
         
     } catch (error) {
         console.error('Error initializing editor:', error);
         showError('Erro ao carregar o editor: ' + error.message);
+        
+        // Esconder loading se houver erro
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        if (loadingOverlay) {
+            loadingOverlay.style.display = 'none';
+        }
     }
 }
 
@@ -1455,8 +1515,8 @@ function loadTemplate(config) {
     try {
         const iframe = document.getElementById('previewFrame');
         
-        // Caminho correto: /templates/vip/{folder}/index.html
-        const templatePath = `templates/vip/${config.folder}/index.html`;
+        // Suportar templates VIP (folder) e FREE (path)
+        const templatePath = config.path || `templates/vip/${config.folder}/index.html`;
         
         console.log('🔥 Carregando template via iframe.src:', templatePath);
         
@@ -1466,6 +1526,12 @@ function loadTemplate(config) {
         // Aguardar carregamento do iframe
         iframe.onload = function() {
             console.log('✅ Template carregado com sucesso:', config.name);
+            
+            // Esconder loading imediatamente
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'none';
+            }
             
             // Tentar tornar editável após carregar
             setTimeout(() => {
@@ -1479,6 +1545,9 @@ function loadTemplate(config) {
                         ElementDragDropManager.enableDropZones(iframeDoc);
                         TemplateColorManager.detectTemplateColors();
                         TemplateColorManager.createColorPanel();
+                        
+                        // Ativar preview em tempo real
+                        enableLivePreview();
                     }
                 } catch (e) {
                     console.warn('Não foi possível tornar o template editável:', e);
@@ -1488,6 +1557,10 @@ function loadTemplate(config) {
         
         iframe.onerror = function() {
             console.error('❌ Erro ao carregar template:', templatePath);
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'none';
+            }
             showError('Erro ao carregar o template. Verifique se o arquivo existe.');
         };
         
@@ -1511,17 +1584,31 @@ function makeTemplateEditable(doc) {
             el.setAttribute('contenteditable', 'true');
             el.style.cursor = 'text';
             
+            // ✨ DOUBLE-CLICK para editar facilmente
+            el.addEventListener('dblclick', function(e) {
+                e.stopPropagation();
+                this.focus();
+                // Selecionar todo o texto
+                const range = doc.createRange();
+                range.selectNodeContents(this);
+                const sel = doc.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                showSuccess('✏️ Editando texto - Pressione Esc para sair');
+            });
+            
             // Add click handler
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
                 selectElement(this);
             });
             
-            // Add hover effect
+            // Add hover effect MELHORADO
             el.addEventListener('mouseenter', function() {
                 if (this !== EditorState.selectedElement) {
                     this.style.outline = '2px dashed #667eea';
                     this.style.outlineOffset = '2px';
+                    this.title = '🖱️ Clique para selecionar | ✏️ Duplo-clique para editar';
                 }
             });
             
@@ -1529,6 +1616,7 @@ function makeTemplateEditable(doc) {
                 if (this !== EditorState.selectedElement) {
                     this.style.outline = '';
                     this.style.outlineOffset = '';
+                    this.title = '';
                 }
             });
             
@@ -1542,7 +1630,67 @@ function makeTemplateEditable(doc) {
             el.addEventListener('blur', function() {
                 HistoryManager.saveState(true); // Force immediate
             });
+            
+            // ✨ ESC para sair da edição
+            el.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    this.blur();
+                    showSuccess('✅ Edição concluída');
+                }
+            });
         });
+    });
+    
+    // ✨ ATALHOS DE TECLADO GLOBAIS
+    doc.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + D = Duplicar elemento
+        if ((e.ctrlKey || e.metaKey) && e.key === 'd' && EditorState.selectedElement) {
+            e.preventDefault();
+            duplicateSelectedElement();
+        }
+        
+        // Delete = Deletar elemento
+        if (e.key === 'Delete' && EditorState.selectedElement) {
+            deleteSelectedElement();
+        }
+        
+        // Setas para mover elemento (Ctrl/Cmd + Arrow)
+        if ((e.ctrlKey || e.metaKey) && EditorState.selectedElement) {
+            const moveDistance = e.shiftKey ? 10 : 1; // Shift = movimento maior
+            
+            switch(e.key) {
+                case 'ArrowUp':
+                    e.preventDefault();
+                    moveElement(0, -moveDistance);
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    moveElement(0, moveDistance);
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    moveElement(-moveDistance, 0);
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    moveElement(moveDistance, 0);
+                    break;
+            }
+        }
+    });
+    
+    // ✨ MENU DE CONTEXTO (Botão Direito)
+    doc.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        
+        // Se clicou em elemento editável, seleciona ele
+        let targetElement = e.target;
+        const editableSelectors = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'a', 'button', 'li', 'img', 'video'];
+        if (editableSelectors.some(sel => targetElement.matches(sel))) {
+            selectElement(targetElement);
+        }
+        
+        showContextMenu(e.pageX, e.pageY);
     });
 }
 
@@ -2063,30 +2211,485 @@ function saveTemplate() {
     }
 }
 
-// Export Template
-function exportTemplate() {
+// Export Template - SISTEMA PROFISSIONAL COM .ZIP - CORRIGIDO
+async function exportTemplate() {
     const iframe = document.getElementById('previewFrame');
     const doc = iframe.contentDocument;
     
-    if (doc) {
-        const html = doc.documentElement.outerHTML;
+    if (!doc) {
+        showError('❌ Nenhum template carregado');
+        return;
+    }
+    
+    showFeedback('📦 Preparando exportação...', 'info');
+    
+    try {
+        const zip = new JSZip();
         
-        const blob = new Blob([html], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
+        // Clonar body sem elementos do editor
+        const bodyClone = doc.body.cloneNode(true);
+        bodyClone.querySelectorAll('.editor-element-wrapper, .editor-overlay, .selected').forEach(el => {
+            el.classList.remove('editor-element-wrapper', 'editor-overlay', 'selected');
+            el.style.border = '';
+            el.style.outline = '';
+        });
+        
+        const bodyHTML = bodyClone.innerHTML;
+        
+        // COLETAR TODO CSS - INCLUINDO INLINE STYLES
+        let allCSS = `/* Template Vozzy - ${EditorState.currentTemplate} */\n\n`;
+        
+        // 1. CSS de <style> tags
+        doc.querySelectorAll('style').forEach(style => {
+            allCSS += '/* Estilos inline */\n' + style.textContent + '\n\n';
+        });
+        
+        // 2. Tentar buscar CSS externos
+        const linkElements = doc.querySelectorAll('link[rel="stylesheet"]');
+        for (const link of linkElements) {
+            try {
+                const response = await fetch(link.href);
+                const css = await response.text();
+                allCSS += `/* ${link.href} */\n` + css + '\n\n';
+            } catch (e) {
+                console.log('CSS externo não acessível:', link.href);
+                // Adicionar import como fallback
+                allCSS += `@import url('${link.href}');\n\n`;
+            }
+        }
+        
+        // COLETAR TODO JAVASCRIPT
+        let allJS = `/* Template Vozzy - ${EditorState.currentTemplate} */\n\n`;
+        
+        // Scripts inline
+        doc.querySelectorAll('script:not([src])').forEach(script => {
+            if (script.textContent.trim() && !script.textContent.includes('editor-vip')) {
+                allJS += script.textContent + '\n\n';
+            }
+        });
+        
+        // Scripts externos - adicionar referências
+        const externalScripts = [];
+        doc.querySelectorAll('script[src]').forEach(script => {
+            if (!script.src.includes('editor-vip') && !script.src.includes('monetization')) {
+                externalScripts.push(script.src);
+            }
+        });
+        
+        // PROCESSAR IMAGENS
+        const images = doc.querySelectorAll('img');
+        const assetsFolder = zip.folder('assets');
+        const imageMap = {};
+        
+        for (let i = 0; i < images.length; i++) {
+            const img = images[i];
+            const src = img.src;
+            if (imageMap[src]) continue;
+            
+            try {
+                if (src.startsWith('data:')) {
+                    const base64Data = src.split(',')[1];
+                    const ext = src.match(/data:image\/([a-z]+);/)?.[1] || 'png';
+                    const filename = `image-${i + 1}.${ext}`;
+                    assetsFolder.file(filename, base64Data, {base64: true});
+                    imageMap[src] = `./assets/${filename}`;
+                } else if (src.startsWith('http')) {
+                    try {
+                        const response = await fetch(src);
+                        const blob = await response.blob();
+                        const ext = src.split('.').pop().split('?')[0] || 'jpg';
+                        const filename = `image-${i + 1}.${ext}`;
+                        assetsFolder.file(filename, blob);
+                        imageMap[src] = `./assets/${filename}`;
+                    } catch (e) {
+                        imageMap[src] = src; // Manter URL original
+                    }
+                }
+            } catch (e) {
+                imageMap[src] = src;
+            }
+        }
+        
+        // Atualizar caminhos das imagens
+        let finalHTML = bodyHTML;
+        for (const [oldSrc, newSrc] of Object.entries(imageMap)) {
+            finalHTML = finalHTML.replaceAll(oldSrc, newSrc);
+        }
+        
+        // CRIAR HTML FINAL COMPLETO
+        const scriptTags = externalScripts.map(src => `    <script src="${src}"></script>`).join('\n');
+        
+        const finalDocument = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${EditorState.currentTemplate} - Vozzy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+${finalHTML}
+    
+    <!-- Scripts externos -->
+${scriptTags}
+    
+    <!-- Script do template -->
+    <script src="script.js"></script>
+</body>
+</html>`;
+        
+        // Adicionar arquivos ao ZIP
+        zip.file('index.html', finalDocument);
+        zip.file('style.css', allCSS);
+        zip.file('script.js', allJS || '// Template Vozzy\nconsole.log("Template carregado com sucesso!");');
+        
+        // README com instruções
+        zip.file('README.txt', `Template Vozzy - ${EditorState.currentTemplate}
+
+COMO USAR:
+1. Extraia todos os arquivos desta pasta
+2. Abra o arquivo index.html em qualquer navegador
+3. Para hospedar online, faça upload de todos os arquivos
+
+ESTRUTURA:
+- index.html: Página principal
+- style.css: Estilos do template
+- script.js: Funcionalidades JavaScript
+- assets/: Imagens e recursos
+
+HOSPEDAGEM:
+Você pode hospedar gratuitamente em:
+- Netlify (netlify.com)
+- Vercel (vercel.com)
+- GitHub Pages (pages.github.com)
+
+Criado com Vozzy - Editor de Landing Pages
+`);
+        
+        // Gerar e baixar ZIP
+        const zipBlob = await zip.generateAsync({
+            type: 'blob',
+            compression: 'DEFLATE',
+            compressionOptions: { level: 9 }
+        });
+        
+        const url = URL.createObjectURL(zipBlob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${EditorState.currentTemplate}-edited.html`;
+        a.download = `${EditorState.currentTemplate}-vozzy.zip`;
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        showSuccess('✅ Template exportado com sucesso!');
+        showSuccess('✅ Exportação completa! .zip criado com HTML, CSS, JS e imagens. Pronto para hospedar!');
+    } catch (error) {
+        console.error('Erro na exportação:', error);
+        showError('❌ Erro ao exportar: ' + error.message);
     }
 }
 
-// Preview Template
+// Preview Template - EM TEMPO REAL
 function previewTemplate() {
     const iframe = document.getElementById('previewFrame');
-    const win = window.open(iframe.src, '_blank');
+    const doc = iframe.contentDocument;
+    
+    if (!doc) {
+        showError('❌ Nenhum template carregado');
+        return;
+    }
+    
+    // CAPTURAR HTML COMPLETO COM ESTILOS INLINE
+    const bodyClone = doc.body.cloneNode(true);
+    
+    // Remover elementos do editor
+    bodyClone.querySelectorAll('.editor-element-wrapper, .editor-overlay, .selected').forEach(el => {
+        el.classList.remove('editor-element-wrapper', 'editor-overlay', 'selected');
+        el.style.border = '';
+        el.style.outline = '';
+    });
+    
+}
+
+// Preview Template - EM TEMPO REAL
+function previewTemplate() {
+    const iframe = document.getElementById('previewFrame');
+    const doc = iframe.contentDocument;
+    
+    if (!doc) {
+        showError('❌ Nenhum template carregado');
+        return;
+    }
+    
+    // CAPTURAR HTML COMPLETO COM ESTILOS INLINE
+    const bodyClone = doc.body.cloneNode(true);
+    
+    // Remover elementos do editor
+    bodyClone.querySelectorAll('.editor-element-wrapper, .editor-overlay, .selected').forEach(el => {
+        el.classList.remove('editor-element-wrapper', 'editor-overlay', 'selected');
+        el.style.border = '';
+        el.style.outline = '';
+    });
+    
+    // CAPTURAR TODO O CSS
+    let allStyles = '';
+    
+    // 1. CSS inline de <style> tags
+    doc.querySelectorAll('style').forEach(style => {
+        allStyles += style.textContent + '\n';
+    });
+    
+    // 2. CSS externo (links)
+    doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        allStyles += `@import url('${link.href}');\n`;
+    });
+    
+    // 3. Capturar JavaScript
+    let allScripts = '';
+    doc.querySelectorAll('script:not([src*="editor"])').forEach(script => {
+        if (script.textContent.trim()) {
+            allScripts += script.textContent + '\n';
+        }
+    });
+    
+    // HTML final
+    const finalHTML = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview - Vozzy</title>
+    <style>${allStyles}</style>
+</head>
+<body>
+${bodyClone.innerHTML}
+<script>${allScripts}</script>
+</body>
+</html>`;
+    
+    // Abrir preview
+    const previewWindow = window.open('', 'Preview', 'width=1200,height=800');
+    if (previewWindow) {
+        previewWindow.document.write(finalHTML);
+        previewWindow.document.close();
+    }
+}
+
+/* CÓDIGO CORROMPIDO COMENTADO TEMPORARIAMENTE
+                    const base64Data = src.split(',')[1];
+                    const ext = src.match(/data:image\/([a-z]+);/)?.[1] || 'png';
+                    const filename = `image-${i + 1}.${ext}`;
+                    assetsFolder.file(filename, base64Data, {base64: true});
+                    imageMap[src] = `./assets/${filename}`;
+                } else if (src.startsWith('http')) {
+                    try {
+                        const response = await fetch(src);
+                        const blob = await response.blob();
+                        const ext = src.split('.').pop().split('?')[0] || 'jpg';
+                        const filename = `image-${i + 1}.${ext}`;
+                        assetsFolder.file(filename, blob);
+                        imageMap[src] = `./assets/${filename}`;
+                    } catch (e) {
+                        imageMap[src] = src;
+                    }
+                }
+            } catch (e) {
+                imageMap[src] = src;
+            }
+        }
+        
+        // Atualizar caminhos
+        let finalHTML = bodyHTML;
+        for (const [oldSrc, newSrc] of Object.entries(imageMap)) {
+            finalHTML = finalHTML.replaceAll(oldSrc, newSrc);
+        }
+        
+        // HTML final
+        const finalDocument = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${EditorState.currentTemplate} - Vozzy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+${finalHTML}
+    <script src="script.js"></script>
+</body>
+</html>`;
+        
+        // Adicionar arquivos
+        zip.file('index.html', finalDocument);
+        zip.file('style.css', allCSS);
+        zip.file('script.js', allJS || '// Template Vozzy\nconsole.log("Template carregado!");');
+        
+        // Gerar e baixar
+        const zipBlob = await zip.generateAsync({
+            type: 'blob',
+            compression: 'DEFLATE',
+            compressionOptions: { level: 9 }
+        });
+        
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${EditorState.currentTemplate}-vozzy.zip`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        showSuccess('✅ Exportação completa! .zip criado com HTML, CSS, JS e imagens.');
+    } catch (error) {
+        console.error('Erro:', error);
+        showError('❌ Erro ao exportar: ' + error.message);
+    }
+}
+FIM DO CÓDIGO CORROMPIDO COMENTADO */
+
+// Save Template
+function saveTemplate() {
+    showSuccess('✅ Template salvo automaticamente!');
+}
+
+// Change Device
+function changeDevice(device) {
+    const canvasWrapper = document.getElementById('canvasWrapper');
+    const iframe = document.getElementById('previewFrame');
+    const buttons = document.querySelectorAll('.device-btn');
+    
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.closest('.device-btn').classList.add('active');
+    
+    if (device === 'mobile') {
+        canvasWrapper.style.maxWidth = '375px';
+        iframe.style.width = '375px';
+    } else {
+        canvasWrapper.style.maxWidth = 'none';
+        iframe.style.width = '100%';
+    }
+}
+
+// Show Feedback
+function showFeedback(message, type = 'info') {
+    console.log(`[${type.toUpperCase()}] ${message}`);
+}
+
+function showSuccess(message) {
+    showFeedback(message, 'success');
+    alert(message);
+}
+
+function showError(message) {
+    showFeedback(message, 'error');
+    alert(message);
+}
+
+// Close Properties
+function closeProperties() {
+    document.getElementById('rightSidebar').style.display = 'none';
+}
+
+// Preview Template - EM TEMPO REAL (NOVA VERSÃO FUNCIONAL)
+function previewTemplate() {
+    const iframe = document.getElementById('previewFrame');
+    const doc = iframe.contentDocument;
+    
+    if (!doc) {
+        showError('❌ Nenhum template carregado');
+        return;
+    }
+    
+    // CAPTURAR HTML COMPLETO COM ESTILOS INLINE
+    const bodyClone = doc.body.cloneNode(true);
+    
+    // Remover elementos do editor
+    bodyClone.querySelectorAll('.editor-element-wrapper, .editor-overlay, .selected').forEach(el => {
+        el.classList.remove('editor-element-wrapper', 'editor-overlay', 'selected');
+        el.style.border = '';
+        el.style.outline = '';
+    });
+    
+    // CAPTURAR TODO O CSS
+    let allStyles = '';
+    
+    // 1. CSS inline de <style> tags
+    doc.querySelectorAll('style').forEach(style => {
+        allStyles += style.textContent + '\n';
+    });
+    
+    // 2. CSS de <link> externos
+    doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        allStyles += `@import url('${link.href}');\n`;
+    });
+    
+    // CAPTURAR TODO O JAVASCRIPT
+    let allScripts = '';
+    doc.querySelectorAll('script').forEach(script => {
+        if (script.src) {
+            allScripts += `<script src="${script.src}"></script>\n`;
+        } else if (script.textContent.trim()) {
+            allScripts += `<script>${script.textContent}</script>\n`;
+        }
+    });
+    
+    // CRIAR HTML COMPLETO
+    const previewHTML = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview - ${EditorState.currentTemplate}</title>
+    <style>${allStyles}</style>
+</head>
+<body>
+${bodyClone.innerHTML}
+${allScripts}
+</body>
+</html>`;
+    
+    // Abrir em nova janela
+    const previewWindow = window.open('', 'Preview - Vozzy', 'width=1200,height=800');
+    
+    if (previewWindow) {
+        previewWindow.document.write(previewHTML);
+        previewWindow.document.close();
+        showSuccess('✅ Preview aberto com suas edições!');
+    } else {
+        showError('❌ Popup bloqueado. Permita popups para ver o preview.');
+    }
+}
+
+// Preview em Tempo Real Automático
+let previewUpdateTimer = null;
+
+function enableLivePreview() {
+    const iframe = document.getElementById('previewFrame');
+    
+    if (!iframe.contentDocument) return;
+    
+    // Observer para mudanças no DOM
+    const observer = new MutationObserver((mutations) => {
+        // Debounce para não atualizar a cada letra digitada
+        clearTimeout(previewUpdateTimer);
+        previewUpdateTimer = setTimeout(() => {
+            // Atualizar camadas
+            if (typeof LayersManager !== 'undefined' && LayersManager.updateLayers) {
+                LayersManager.updateLayers();
+            }
+        }, 300);
+    });
+    
+    // Observar mudanças no body
+    observer.observe(iframe.contentDocument.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        characterData: true
+    });
+    
+    console.log('✅ Preview em tempo real ativado!');
 }
 
 // Refresh Layers
@@ -2118,6 +2721,158 @@ function setupKeyboardShortcuts() {
             saveTemplate();
         }
     });
+}
+
+// ✨ DUPLICAR ELEMENTO SELECIONADO
+function duplicateSelectedElement() {
+    if (!EditorState.selectedElement) {
+        showError('❌ Nenhum elemento selecionado');
+        return;
+    }
+    
+    const clone = EditorState.selectedElement.cloneNode(true);
+    
+    // Posicionar um pouco abaixo
+    if (clone.style.position === 'absolute') {
+        const top = parseInt(clone.style.top) || 0;
+        clone.style.top = (top + 20) + 'px';
+    }
+    
+    // Inserir depois do elemento original
+    EditorState.selectedElement.parentNode.insertBefore(
+        clone, 
+        EditorState.selectedElement.nextSibling
+    );
+    
+    // Recarregar camadas e histórico
+    const iframe = document.getElementById('previewFrame');
+    if (iframe.contentDocument) {
+        makeTemplateEditable(iframe.contentDocument);
+        generateLayersTree(iframe.contentDocument);
+    }
+    
+    HistoryManager.saveState();
+    selectElement(clone);
+    showSuccess('✅ Elemento duplicado! Use Ctrl+D para duplicar novamente');
+}
+
+// ✨ DELETAR ELEMENTO SELECIONADO
+function deleteSelectedElement() {
+    if (!EditorState.selectedElement) {
+        showError('❌ Nenhum elemento selecionado');
+        return;
+    }
+    
+    if (confirm('Deseja realmente deletar este elemento?')) {
+        EditorState.selectedElement.remove();
+        EditorState.selectedElement = null;
+        
+        // Recarregar camadas e histórico
+        const iframe = document.getElementById('previewFrame');
+        if (iframe.contentDocument) {
+            generateLayersTree(iframe.contentDocument);
+        }
+        
+        HistoryManager.saveState();
+        closeProperties();
+        showSuccess('🗑️ Elemento deletado');
+    }
+}
+
+// ✨ MOVER ELEMENTO (Teclado)
+function moveElement(deltaX, deltaY) {
+    if (!EditorState.selectedElement) return;
+    
+    const el = EditorState.selectedElement;
+    
+    // Se não tiver posição absoluta, aplicar
+    if (el.style.position !== 'absolute') {
+        el.style.position = 'relative';
+    }
+    
+    const currentLeft = parseInt(el.style.left) || 0;
+    const currentTop = parseInt(el.style.top) || 0;
+    
+    el.style.left = (currentLeft + deltaX) + 'px';
+    el.style.top = (currentTop + deltaY) + 'px';
+    
+    HistoryManager.saveState();
+}
+
+// ✨ MENU DE CONTEXTO
+function showContextMenu(x, y) {
+    // Remover menu anterior se existir
+    const oldMenu = document.getElementById('contextMenu');
+    if (oldMenu) oldMenu.remove();
+    
+    // Criar menu
+    const menu = document.createElement('div');
+    menu.id = 'contextMenu';
+    menu.style.cssText = `
+        position: fixed;
+        left: ${x}px;
+        top: ${y}px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 100000;
+        min-width: 200px;
+        overflow: hidden;
+    `;
+    
+    const menuItems = [
+        { label: '✏️ Editar', action: () => EditorState.selectedElement?.focus(), disabled: !EditorState.selectedElement },
+        { label: '📋 Duplicar (Ctrl+D)', action: duplicateSelectedElement, disabled: !EditorState.selectedElement },
+        { label: '🗑️ Deletar (Del)', action: deleteSelectedElement, disabled: !EditorState.selectedElement },
+        { separator: true },
+        { label: '⬆️ Mover para Cima', action: () => moveElement(0, -10), disabled: !EditorState.selectedElement },
+        { label: '⬇️ Mover para Baixo', action: () => moveElement(0, 10), disabled: !EditorState.selectedElement }
+    ];
+    
+    menuItems.forEach(item => {
+        if (item.separator) {
+            const sep = document.createElement('div');
+            sep.style.cssText = 'height: 1px; background: #eee; margin: 4px 0;';
+            menu.appendChild(sep);
+        } else {
+            const btn = document.createElement('button');
+            btn.textContent = item.label;
+            btn.disabled = item.disabled;
+            btn.style.cssText = `
+                width: 100%;
+                padding: 10px 16px;
+                border: none;
+                background: ${item.disabled ? '#f5f5f5' : 'white'};
+                text-align: left;
+                cursor: ${item.disabled ? 'not-allowed' : 'pointer'};
+                color: ${item.disabled ? '#ccc' : '#333'};
+                font-size: 14px;
+                transition: background 0.2s;
+            `;
+            
+            if (!item.disabled) {
+                btn.onmouseenter = () => btn.style.background = '#f0f0f0';
+                btn.onmouseleave = () => btn.style.background = 'white';
+                btn.onclick = () => {
+                    item.action();
+                    menu.remove();
+                };
+            }
+            
+            menu.appendChild(btn);
+        }
+    });
+    
+    document.body.appendChild(menu);
+    
+    // Fechar ao clicar fora
+    setTimeout(() => {
+        document.addEventListener('click', function closeMenu() {
+            menu.remove();
+            document.removeEventListener('click', closeMenu);
+        });
+    }, 100);
 }
 
 // Utility Functions
@@ -2590,6 +3345,50 @@ const PropertyManager = {
                     </button>
                 </div>
             </div>` : ''}
+            
+            ${elementType === 'button' || elementType === 'image' || elementType === 'card' ? `
+            <div class="property-group">
+                <div class="property-group-title">🔗 LINK</div>
+                <div class="property-item">
+                    <label class="property-label">Tipo</label>
+                    <select class="property-input" id="linkType" onchange="PropertyManager.updateLinkType(this.value)">
+                        <option value="none">Sem link</option>
+                        <option value="url">URL/Site</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Telefone</option>
+                    </select>
+                </div>
+                <div class="property-item" id="linkUrlField" style="display:none;">
+                    <label class="property-label">URL</label>
+                    <input type="text" class="property-input" id="linkUrl" placeholder="https://exemplo.com" onchange="PropertyManager.setLink(this.value)">
+                </div>
+                <div class="property-item" id="whatsappField" style="display:none;">
+                    <label class="property-label">Número</label>
+                    <input type="text" class="property-input" id="whatsappNumber" placeholder="5511999999999" onchange="PropertyManager.setWhatsApp(this.value)">
+                </div>
+                <div class="property-item" id="instagramField" style="display:none;">
+                    <label class="property-label">@Username</label>
+                    <input type="text" class="property-input" id="instagramUser" placeholder="seuperfil" onchange="PropertyManager.setInstagram(this.value)">
+                </div>
+                <div class="property-item" id="emailField" style="display:none;">
+                    <label class="property-label">Email</label>
+                    <input type="email" class="property-input" id="emailAddress" placeholder="contato@exemplo.com" onchange="PropertyManager.setEmail(this.value)">
+                </div>
+                <div class="property-item" id="phoneField" style="display:none;">
+                    <label class="property-label">Telefone</label>
+                    <input type="tel" class="property-input" id="phoneNumber" placeholder="11999999999" onchange="PropertyManager.setPhone(this.value)">
+                </div>
+                <div class="property-item" id="targetField" style="display:none;">
+                    <label class="property-label">Abrir em</label>
+                    <select class="property-input" id="linkTarget" onchange="PropertyManager.setLinkTarget(this.value)">
+                        <option value="_blank">Nova aba</option>
+                        <option value="_self">Mesma aba</option>
+                    </select>
+                </div>
+            </div>` : ''}
+            
             <div class="property-group">
                 <div class="property-group-title">🗑️ AÇÕES</div>
                 <button class="btn-secondary" style="width: 100%; background: #ef4444; color: white;" onclick="PropertyManager.deleteElement()">
@@ -2701,6 +3500,175 @@ const PropertyManager = {
             setTimeout(() => HistoryManager.saveState(true), 100);
             showFeedback('🗑️ Elemento deletado!', 'success');
         }
+    },
+    
+    // ===== SISTEMA DE LINKS =====
+    
+    updateLinkType(type) {
+        // Esconde todos os campos
+        ['linkUrlField', 'whatsappField', 'instagramField', 'emailField', 'phoneField', 'targetField'].forEach(id => {
+            const field = document.getElementById(id);
+            if (field) field.style.display = 'none';
+        });
+        
+        // Mostra campo apropriado
+        if (type === 'url') {
+            document.getElementById('linkUrlField').style.display = 'block';
+            document.getElementById('targetField').style.display = 'block';
+        } else if (type === 'whatsapp') {
+            document.getElementById('whatsappField').style.display = 'block';
+        } else if (type === 'instagram') {
+            document.getElementById('instagramField').style.display = 'block';
+        } else if (type === 'email') {
+            document.getElementById('emailField').style.display = 'block';
+        } else if (type === 'phone') {
+            document.getElementById('phoneField').style.display = 'block';
+        }
+    },
+    
+    setLink(url) {
+        if (!this.currentElement) return;
+        HistoryManager.saveState(true);
+        
+        const target = document.getElementById('linkTarget')?.value || '_blank';
+        const elementType = this.currentElement.dataset.elementType;
+        
+        if (elementType === 'button') {
+            const btn = this.currentElement.querySelector('button');
+            if (btn) {
+                btn.onclick = () => window.open(url, target);
+                btn.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'image') {
+            const img = this.currentElement.querySelector('img');
+            if (img) {
+                img.onclick = () => window.open(url, target);
+                img.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'card') {
+            this.currentElement.onclick = () => window.open(url, target);
+            this.currentElement.style.cursor = 'pointer';
+        }
+        
+        setTimeout(() => HistoryManager.saveState(true), 100);
+        showFeedback('🔗 Link adicionado!', 'success');
+    },
+    
+    setWhatsApp(number) {
+        if (!this.currentElement) return;
+        HistoryManager.saveState(true);
+        
+        const url = `https://wa.me/${number.replace(/\D/g, '')}`;
+        const elementType = this.currentElement.dataset.elementType;
+        
+        if (elementType === 'button') {
+            const btn = this.currentElement.querySelector('button');
+            if (btn) {
+                btn.onclick = () => window.open(url, '_blank');
+                btn.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'image') {
+            const img = this.currentElement.querySelector('img');
+            if (img) {
+                img.onclick = () => window.open(url, '_blank');
+                img.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'card') {
+            this.currentElement.onclick = () => window.open(url, '_blank');
+            this.currentElement.style.cursor = 'pointer';
+        }
+        
+        setTimeout(() => HistoryManager.saveState(true), 100);
+        showFeedback('📱 WhatsApp vinculado!', 'success');
+    },
+    
+    setInstagram(username) {
+        if (!this.currentElement) return;
+        HistoryManager.saveState(true);
+        
+        const url = `https://instagram.com/${username.replace('@', '')}`;
+        const elementType = this.currentElement.dataset.elementType;
+        
+        if (elementType === 'button') {
+            const btn = this.currentElement.querySelector('button');
+            if (btn) {
+                btn.onclick = () => window.open(url, '_blank');
+                btn.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'image') {
+            const img = this.currentElement.querySelector('img');
+            if (img) {
+                img.onclick = () => window.open(url, '_blank');
+                img.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'card') {
+            this.currentElement.onclick = () => window.open(url, '_blank');
+            this.currentElement.style.cursor = 'pointer';
+        }
+        
+        setTimeout(() => HistoryManager.saveState(true), 100);
+        showFeedback('📸 Instagram vinculado!', 'success');
+    },
+    
+    setEmail(email) {
+        if (!this.currentElement) return;
+        HistoryManager.saveState(true);
+        
+        const url = `mailto:${email}`;
+        const elementType = this.currentElement.dataset.elementType;
+        
+        if (elementType === 'button') {
+            const btn = this.currentElement.querySelector('button');
+            if (btn) {
+                btn.onclick = () => window.location.href = url;
+                btn.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'image') {
+            const img = this.currentElement.querySelector('img');
+            if (img) {
+                img.onclick = () => window.location.href = url;
+                img.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'card') {
+            this.currentElement.onclick = () => window.location.href = url;
+            this.currentElement.style.cursor = 'pointer';
+        }
+        
+        setTimeout(() => HistoryManager.saveState(true), 100);
+        showFeedback('✉️ Email vinculado!', 'success');
+    },
+    
+    setPhone(phone) {
+        if (!this.currentElement) return;
+        HistoryManager.saveState(true);
+        
+        const url = `tel:${phone.replace(/\D/g, '')}`;
+        const elementType = this.currentElement.dataset.elementType;
+        
+        if (elementType === 'button') {
+            const btn = this.currentElement.querySelector('button');
+            if (btn) {
+                btn.onclick = () => window.location.href = url;
+                btn.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'image') {
+            const img = this.currentElement.querySelector('img');
+            if (img) {
+                img.onclick = () => window.location.href = url;
+                img.style.cursor = 'pointer';
+            }
+        } else if (elementType === 'card') {
+            this.currentElement.onclick = () => window.location.href = url;
+            this.currentElement.style.cursor = 'pointer';
+        }
+        
+        setTimeout(() => HistoryManager.saveState(true), 100);
+        showFeedback('📞 Telefone vinculado!', 'success');
+    },
+    
+    setLinkTarget(target) {
+        // Apenas armazena o target, será usado quando setLink for chamado
+        showFeedback(`🎯 Abrirá em ${target === '_blank' ? 'nova aba' : 'mesma aba'}`, 'success');
     }
 };
 
@@ -2743,6 +3711,163 @@ const EmojiPickerManager = {
 function closeEmojiModal() {
     EmojiPickerManager.close();
 }
+
+/* ============================================
+   📱 RESPONSIVE MANAGER - RESPONSIVIDADE AUTOMÁTICA
+   ============================================ */
+
+const ResponsiveManager = {
+    init() {
+        console.log('🔧 Inicializando ResponsiveManager...');
+        this.injectResponsiveCSS();
+    },
+    
+    injectResponsiveCSS() {
+        const iframe = document.getElementById('previewFrame');
+        if (!iframe || !iframe.contentDocument) {
+            setTimeout(() => this.injectResponsiveCSS(), 500);
+            return;
+        }
+        
+        const doc = iframe.contentDocument;
+        
+        // Remove style existente se houver
+        const existingStyle = doc.getElementById('responsive-styles');
+        if (existingStyle) existingStyle.remove();
+        
+        // Cria novo style
+        const style = doc.createElement('style');
+        style.id = 'responsive-styles';
+        style.textContent = `
+            /* ============================================
+               RESPONSIVIDADE AUTOMÁTICA - VOZZY
+               ============================================ */
+            
+            /* Mobile First - Base */
+            * {
+                box-sizing: border-box;
+            }
+            
+            img, video, iframe {
+                max-width: 100%;
+                height: auto !important;
+            }
+            
+            /* Tablets e menores (max-width: 768px) */
+            @media (max-width: 768px) {
+                body {
+                    font-size: 14px !important;
+                }
+                
+                h1 {
+                    font-size: 1.75rem !important;
+                }
+                
+                h2 {
+                    font-size: 1.5rem !important;
+                }
+                
+                h3 {
+                    font-size: 1.25rem !important;
+                }
+                
+                p, li {
+                    font-size: 0.9375rem !important;
+                    line-height: 1.6 !important;
+                }
+                
+                button, .btn {
+                    padding: 10px 24px !important;
+                    font-size: 0.9375rem !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                }
+                
+                section {
+                    padding: 40px 20px !important;
+                }
+                
+                .container, [class*="container"] {
+                    padding: 20px !important;
+                    margin: 10px auto !important;
+                }
+                
+                /* Stack columns */
+                [style*="display: flex"],
+                [style*="display:flex"] {
+                    flex-direction: column !important;
+                }
+                
+                /* Cards e containers */
+                [data-element-type="card"],
+                [data-element-type="container"] {
+                    width: 100% !important;
+                    margin: 15px 0 !important;
+                }
+                
+                /* Imagens */
+                img {
+                    width: 100% !important;
+                    height: auto !important;
+                    margin: 15px 0 !important;
+                }
+                
+                /* Ícones */
+                [data-element-type="icon"] div {
+                    width: 50px !important;
+                    height: 50px !important;
+                    font-size: 1.5rem !important;
+                }
+            }
+            
+            /* Mobile (max-width: 480px) */
+            @media (max-width: 480px) {
+                h1 {
+                    font-size: 1.5rem !important;
+                }
+                
+                h2 {
+                    font-size: 1.25rem !important;
+                }
+                
+                h3 {
+                    font-size: 1.125rem !important;
+                }
+                
+                p {
+                    font-size: 0.875rem !important;
+                }
+                
+                button, .btn {
+                    padding: 12px 20px !important;
+                    font-size: 0.875rem !important;
+                }
+                
+                section {
+                    padding: 30px 15px !important;
+                }
+                
+                .container, [class*="container"] {
+                    padding: 15px !important;
+                }
+            }
+            
+            /* Ajustes específicos para elementos editáveis */
+            .editor-element-wrapper {
+                position: relative !important;
+            }
+            
+            @media (max-width: 768px) {
+                .editor-element-wrapper {
+                    margin: 10px 0 !important;
+                }
+            }
+        `;
+        
+        doc.head.appendChild(style);
+        console.log('✅ CSS Responsivo injetado!');
+    }
+};
 
 // Prevent accidental navigation
 window.addEventListener('beforeunload', function(e) {

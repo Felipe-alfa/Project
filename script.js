@@ -343,7 +343,7 @@ function loadTemplate(templateName) {
         const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
         
         if (!isLoggedIn) {
-            alert('🔒 Você precisa estar logado para comprar templates VIP!\n\nFaça login ou crie uma conta para continuar.');
+            alert('🔒 Você precisa estar logado para usar templates VIP!\n\nFaça login ou crie uma conta para continuar.');
             return;
         }
         
@@ -355,12 +355,10 @@ function loadTemplate(templateName) {
         const hasSubscription = localStorage.getItem('userSubscription') !== null;
         
         if (hasPurchased || hasSubscription) {
-            // Já comprou ou tem assinatura - pode usar no EDITOR VIP
-            // Salva o template escolhido
+            // ✅ JÁ COMPROU OU TEM ASSINATURA → EDITOR VIP (SEM LIMITAÇÕES)
             localStorage.setItem('selectedTemplate', templateName);
             
             // Para templates VIP de profissões (novos), salvar dados mínimos
-            // pois eles têm seus próprios HTML/CSS/JS
             const template = templates[templateName];
             if (template) {
                 localStorage.setItem('landingConfig', JSON.stringify({...landingConfig, ...template}));
@@ -369,11 +367,21 @@ function loadTemplate(templateName) {
                 localStorage.setItem('landingConfig', JSON.stringify(landingConfig));
             }
             
-            // Vai para o EDITOR VIP (não o editor normal!)
+            // Vai para o EDITOR VIP (sem limitações!)
             window.location.href = 'editor-vip.html';
         } else {
-            // Precisa comprar - Redireciona para checkout
-            window.location.href = 'checkout-template.html?template=' + templateName;
+            // ⚠️ LOGADO MAS NÃO COMPROU → EDITOR GRATUITO (COM LIMITAÇÕES)
+            localStorage.setItem('selectedTemplate', templateName);
+            
+            const template = templates[templateName];
+            if (template) {
+                localStorage.setItem('landingConfig', JSON.stringify({...landingConfig, ...template}));
+            } else {
+                localStorage.setItem('landingConfig', JSON.stringify(landingConfig));
+            }
+            
+            // Vai para EDITOR GRATUITO (com limitações: marca d'água, 2 exportações, paleta limitada)
+            window.location.href = 'editor.html';
         }
         return;
     }

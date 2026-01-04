@@ -1,0 +1,692 @@
+/* ============================================
+   EDITOR VIP PREMIUM - VOZZY
+   Design Luxuoso e Exclusivo
+   ============================================ */
+
+/* ============================================
+   PALETA VIP PREMIUM
+   ============================================ */
+
+:root {
+    /* VIP Gold Gradient */
+    --vip-gold-start: #FFD700;
+    --vip-gold-mid: #FFA500;
+    --vip-gold-end: #FF8C00;
+    
+    /* VIP Purple Premium */
+    --vip-purple-start: #667eea;
+    --vip-purple-end: #764ba2;
+    
+    /* VIP Backgrounds */
+    --vip-bg-dark: #1a1a2e;
+    --vip-bg-card: #16213e;
+    --vip-bg-elevated: #0f3460;
+    
+    /* VIP Text */
+    --vip-text-gold: #FFD700;
+    --vip-text-silver: #e0e0e0;
+    --vip-text-white: #ffffff;
+    
+    /* VIP Effects */
+    --vip-glow: 0 0 20px rgba(255, 215, 0, 0.3);
+    --vip-shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   BODY VIP
+   ============================================ */
+
+.vip-premium-body {
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+}
+
+/* ============================================
+   HEADER VIP
+   ============================================ */
+
+.vip-header {
+    background: linear-gradient(135deg, rgba(15, 12, 41, 0.98), rgba(48, 43, 99, 0.98));
+    backdrop-filter: blur(20px);
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.vip-logo {
+    background: linear-gradient(135deg, var(--vip-gold-start), var(--vip-gold-end));
+    box-shadow: var(--vip-glow);
+    animation: vip-pulse 3s ease-in-out infinite;
+}
+
+@keyframes vip-pulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+    }
+}
+
+.vip-badge-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    background: linear-gradient(135deg, var(--vip-gold-start), var(--vip-gold-mid));
+    color: #0f0c29;
+    font-size: 0.75rem;
+    font-weight: 800;
+    border-radius: 20px;
+    margin-left: 0.5rem;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    animation: vip-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes vip-shimmer {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.template-version {
+    font-size: 0.75rem;
+    color: var(--vip-text-silver);
+    opacity: 0.7;
+    margin-left: 0.5rem;
+}
+
+/* ============================================
+   BOTÕES VIP
+   ============================================ */
+
+.btn-vip-primary {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--vip-gold-start), var(--vip-gold-end));
+    color: #0f0c29;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-vip-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-vip-primary:hover::before {
+    left: 100%;
+}
+
+.btn-vip-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 35px rgba(255, 215, 0, 0.5);
+}
+
+.btn-vip-primary:active {
+    transform: translateY(-1px);
+}
+
+.btn-vip-ghost {
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    color: var(--vip-text-silver);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s ease;
+}
+
+.btn-vip-ghost:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: var(--vip-gold-start);
+    color: var(--vip-text-white);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   DEVICE SELECTOR VIP
+   ============================================ */
+
+.vip-device-selector .device-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    color: var(--vip-text-silver);
+    transition: all 0.25s ease;
+}
+
+.vip-device-selector .device-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: var(--vip-gold-start);
+    transform: translateY(-2px);
+}
+
+.vip-device-selector .device-btn.active {
+    background: linear-gradient(135deg, var(--vip-gold-start), var(--vip-gold-end));
+    border-color: var(--vip-gold-start);
+    color: #0f0c29;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+}
+
+/* ============================================
+   SIDEBARS VIP
+   ============================================ */
+
+.vip-sidebar {
+    background: linear-gradient(180deg, rgba(15, 12, 41, 0.95), rgba(48, 43, 99, 0.95));
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 215, 0, 0.1);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.vip-sidebar-header {
+    padding: 1.5rem 1.25rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.1));
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+}
+
+.vip-sidebar-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--vip-text-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+}
+
+/* ============================================
+   SECTIONS VIP
+   ============================================ */
+
+.vip-section {
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.vip-section-header {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 140, 0, 0.05));
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.vip-section-header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--vip-gold-start), var(--vip-gold-end));
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.vip-section-header:hover::before {
+    transform: scaleY(1);
+}
+
+.vip-section-header:hover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(255, 140, 0, 0.08));
+}
+
+.vip-section-header svg {
+    color: var(--vip-gold-start);
+}
+
+.vip-section-header h3 {
+    color: var(--vip-text-white);
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section-content.expanded {
+    max-height: 2000px;
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.vip-section-header:hover .toggle-icon {
+    transform: translateY(2px);
+}
+
+/* ============================================
+   TEMPLATES VIP GRID
+   ============================================ */
+
+.vip-template-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.875rem;
+    padding: 1rem;
+}
+
+.vip-template-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 215, 0, 0.05));
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.vip-template-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.vip-template-card:hover::before {
+    opacity: 1;
+}
+
+.vip-template-card:hover {
+    border-color: var(--vip-gold-start);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+}
+
+.vip-template-card.active {
+    border-color: var(--vip-gold-start);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 140, 0, 0.1));
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+.vip-template-name {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--vip-text-white);
+    margin-bottom: 0.5rem;
+}
+
+.vip-template-badge {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    background: linear-gradient(135deg, var(--vip-gold-start), var(--vip-gold-end));
+    color: #0f0c29;
+    font-size: 0.625rem;
+    font-weight: 800;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   ELEMENTOS VIP
+   ============================================ */
+
+.vip-elements-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.vip-element-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 215, 0, 0.03));
+    border: 2px dashed rgba(255, 215, 0, 0.3);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    cursor: grab;
+    transition: all 0.3s ease;
+}
+
+.vip-element-card:hover {
+    border-color: var(--vip-gold-start);
+    border-style: solid;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.05));
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.25);
+}
+
+.vip-element-card:active {
+    cursor: grabbing;
+    transform: scale(0.98);
+}
+
+.vip-element-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.3));
+}
+
+.vip-element-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--vip-text-silver);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   CONTROLES DE HISTÓRICO VIP
+   ============================================ */
+
+.vip-history-controls {
+    padding: 1rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.vip-btn-icon {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 215, 0, 0.05));
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 10px;
+    color: var(--vip-text-silver);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.vip-btn-icon:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 140, 0, 0.1));
+    border-color: var(--vip-gold-start);
+    color: var(--vip-text-white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.25);
+}
+
+.vip-btn-icon:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   LAYERS TREE VIP
+   ============================================ */
+
+.vip-layers-tree {
+    padding: 1rem;
+}
+
+.vip-layers-tree .layer-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+
+.vip-layers-tree .layer-item:hover {
+    background: rgba(255, 215, 0, 0.08);
+    border-color: rgba(255, 215, 0, 0.3);
+    transform: translateX(4px);
+}
+
+.vip-layers-tree .layer-item.selected {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.15));
+    border-color: var(--vip-gold-start);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+/* ============================================
+   PROPERTIES PANEL VIP
+   ============================================ */
+
+.vip-properties-panel {
+    padding: 1rem;
+}
+
+.vip-no-selection {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--vip-text-silver);
+}
+
+.vip-feature-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 140, 0, 0.1));
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    color: var(--vip-text-gold);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.vip-feature-badge svg {
+    color: var(--vip-gold-start);
+}
+
+/* ============================================
+   UPLOAD DE ASSETS VIP
+   ============================================ */
+
+.vip-upload-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.08));
+    border: 2px dashed rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    color: var(--vip-text-white);
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.vip-upload-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.15));
+    border-color: var(--vip-gold-start);
+    border-style: solid;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+}
+
+.vip-assets-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.625rem;
+}
+
+/* ============================================
+   SEO PANEL VIP
+   ============================================ */
+
+.vip-seo-panel {
+    padding: 1rem;
+}
+
+.vip-seo-panel .property-input,
+.vip-seo-panel .property-textarea {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    color: var(--vip-text-white);
+}
+
+.vip-seo-panel .property-input:focus,
+.vip-seo-panel .property-textarea:focus {
+    background: rgba(255, 215, 0, 0.05);
+    border-color: var(--vip-gold-start);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15);
+}
+
+/* ============================================
+   CANVAS VIP
+   ============================================ */
+
+.vip-canvas {
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    position: relative;
+}
+
+.vip-canvas::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 140, 0, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* ============================================
+   LOADING VIP
+   ============================================ */
+
+.vip-loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 215, 0, 0.2);
+    border-top-color: var(--vip-gold-start);
+    border-radius: 50%;
+    animation: vip-spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+@keyframes vip-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   SCROLLBAR VIP
+   ============================================ */
+
+.vip-sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.vip-sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.vip-sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--vip-gold-start), var(--vip-gold-end));
+    border-radius: 10px;
+}
+
+.vip-sidebar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--vip-gold-end), var(--vip-gold-start));
+}
+
+/* ============================================
+   PROPERTY GROUPS VIP (sobrescrever)
+   ============================================ */
+
+.vip-properties-panel .property-group {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 215, 0, 0.02));
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.vip-properties-panel .property-group-title {
+    color: var(--vip-text-gold);
+    border-bottom-color: rgba(255, 215, 0, 0.2);
+}
+
+.vip-properties-panel .property-label {
+    color: var(--vip-text-silver);
+}
+
+.vip-properties-panel .property-input,
+.vip-properties-panel .property-textarea,
+.vip-properties-panel .property-select {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 215, 0, 0.2);
+    color: var(--vip-text-white);
+}
+
+.vip-properties-panel .property-input:focus,
+.vip-properties-panel .property-textarea:focus,
+.vip-properties-panel .property-select:focus {
+    background: rgba(255, 215, 0, 0.05);
+    border-color: var(--vip-gold-start);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15);
+}
+
+.vip-properties-panel .property-button {
+    background: linear-gradient(135deg, var(--vip-gold-start), var(--vip-gold-end));
+    color: #0f0c29;
+}
+
+.vip-properties-panel .property-button:hover {
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+}
+
+.vip-properties-panel .property-button.secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--vip-text-white);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.vip-properties-panel .property-button.secondary:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: var(--vip-gold-start);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1400px) {
+    .vip-template-grid {
+        grid-template-columns: 1fr;
+    }
+}

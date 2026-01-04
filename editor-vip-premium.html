@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👑 Editor VIP Premium - Vozzy</title>
+    <link rel="stylesheet" href="editor-vip.css">
+    <link rel="stylesheet" href="editor-vip-premium.css">
+</head>
+<body class="vip-premium-body">
+    <!-- Top Header com Badge VIP -->
+    <header class="top-header vip-header">
+        <div class="header-left">
+            <div class="logo" onclick="window.location.href='index.html'">
+                <div class="logo-box vip-logo">VZ</div>
+                <span class="logo-text">Vozzy <span class="vip-badge-inline">👑 VIP</span></span>
+            </div>
+            <div class="divider"></div>
+            <div class="template-info">
+                <span class="template-name" id="templateNameDisplay">Carregando...</span>
+                <span class="template-version">v1.0</span>
+            </div>
+        </div>
+        
+        <div class="header-center">
+            <div class="device-selector vip-device-selector">
+                <button class="device-btn active" data-device="desktop" onclick="changeDevice('desktop')" title="Desktop (1920px)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z"/>
+                    </svg>
+                    Desktop
+                </button>
+                <button class="device-btn" data-device="tablet" onclick="changeDevice('tablet')" title="Tablet (768px)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 0H6C4.34 0 3 1.34 3 3v18c0 1.66 1.34 3 3 3h12c1.66 0 3-1.34 3-3V3c0-1.66-1.34-3-3-3zm-4 22h-4v-1h4v1zm5.25-3H4.75V3h14.5v16z"/>
+                    </svg>
+                    Tablet
+                </button>
+                <button class="device-btn" data-device="mobile" onclick="changeDevice('mobile')" title="Mobile (375px)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z"/>
+                    </svg>
+                    Mobile
+                </button>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <button class="btn-vip-ghost" onclick="openAIAssistant()" title="Assistente AI (NOVO!)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                AI
+            </button>
+            <button class="btn-vip-ghost" onclick="previewTemplate()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                </svg>
+                Preview
+            </button>
+            <button class="btn-vip-ghost" onclick="saveTemplate()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+                </svg>
+                Salvar
+            </button>
+            <button class="btn-vip-primary" onclick="exportTemplate()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/>
+                </svg>
+                Exportar Ilimitado
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Editor Container -->
+    <div class="editor-main">
+        <!-- Left Sidebar - PREMIUM -->
+        <aside class="left-sidebar vip-sidebar">
+            <div class="vip-sidebar-header">
+                <h2 class="vip-sidebar-title">✨ Ferramentas Premium</h2>
+            </div>
+
+            <!-- Templates VIP (12 templates) -->
+            <div class="sidebar-section vip-section">
+                <div class="section-header vip-section-header" onclick="toggleSection(this)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                    </svg>
+                    <h3>👑 12 Templates VIP Premium</h3>
+                    <svg class="toggle-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                </div>
+                <div class="section-content expanded">
+                    <div id="vipTemplateSelector" class="vip-template-grid">
+                        <!-- Templates VIP carregados dinamicamente -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Elementos Drag & Drop -->
+            <div class="sidebar-section vip-section">
+                <div class="section-header vip-section-header" onclick="toggleSection(this)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                    </svg>
+                    <h3>✨ Adicionar Elementos</h3>
+                    <svg class="toggle-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                </div>
+                <div class="section-content expanded">
+                    <div class="vip-elements-grid">
+                        <div class="vip-element-card" draggable="true" data-element="heading">
+                            <div class="vip-element-icon">📝</div>
+                            <div class="vip-element-name">Título</div>
+                        </div>
+                        <div class="vip-element-card" draggable="true" data-element="paragraph">
+                            <div class="vip-element-icon">📄</div>
+                            <div class="vip-element-name">Parágrafo</div>
+                        </div>
+                        <div class="vip-element-card" draggable="true" data-element="button">
+                            <div class="vip-element-icon">🔘</div>
+                            <div class="vip-element-name">Botão</div>
+                        </div>
+                        <div class="vip-element-card" draggable="true" data-element="image">
+                            <div class="vip-element-icon">🖼️</div>
+                            <div class="vip-element-name">Imagem</div>
+                        </div>
+                        <div class="vip-element-card" draggable="true" data-element="video">
+                            <div class="vip-element-icon">▶️</div>
+                            <div class="vip-element-name">Vídeo</div>
+                        </div>
+                        <div class="vip-element-card" draggable="true" data-element="section">
+                            <div class="vip-element-icon">📦</div>
+                            <div class="vip-element-name">Seção</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Histórico (Undo/Redo) -->
+            <div class="sidebar-section vip-section">
+                <div class="section-header vip-section-header">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+                    </svg>
+                    <h3>🔄 Histórico</h3>
+                </div>
+                <div class="section-content">
+                    <div class="vip-history-controls">
+                        <button class="vip-btn-icon" id="undoBtn" onclick="HistoryManager.undo()" title="Desfazer (Ctrl+Z)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+                            </svg>
+                            Desfazer
+                        </button>
+                        <button class="vip-btn-icon" id="redoBtn" onclick="HistoryManager.redo()" title="Refazer (Ctrl+Y)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"/>
+                            </svg>
+                            Refazer
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Camadas -->
+            <div class="sidebar-section vip-section layers-section">
+                <div class="section-header vip-section-header">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/>
+                    </svg>
+                    <h3>📚 Camadas</h3>
+                </div>
+                <div class="section-content">
+                    <div id="layersTree" class="layers-tree vip-layers-tree">
+                        <!-- Layers carregadas dinamicamente -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Canvas -->
+        <div class="center-canvas vip-canvas">
+            <div class="canvas-wrapper" id="canvasWrapper">
+                <iframe id="previewFrame" src="about:blank"></iframe>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - PROPRIEDADES VIP -->
+        <aside class="right-sidebar vip-sidebar">
+            <div class="vip-sidebar-header">
+                <h2 class="vip-sidebar-title">⚙️ Propriedades Avançadas</h2>
+            </div>
+
+            <div class="properties-panel vip-properties-panel">
+                <div id="propertiesContent">
+                    <div class="no-selection-message vip-no-selection">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" style="opacity: 0.2;">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        <p style="font-size: 1rem; font-weight: 600; margin-top: 1rem;">Selecione um elemento</p>
+                        <small style="opacity: 0.7;">Clique em qualquer elemento para editar suas propriedades</small>
+                        <div class="vip-feature-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            Painel VIP com 15+ opções de edição
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload de Imagens VIP -->
+            <div class="sidebar-section vip-section">
+                <div class="section-header vip-section-header">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                    </svg>
+                    <h3>🖼️ Gerenciador de Assets</h3>
+                </div>
+                <div class="section-content">
+                    <button class="vip-upload-btn" onclick="uploadImage()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/>
+                        </svg>
+                        Upload de Imagem
+                    </button>
+                    <div id="assetsList" class="vip-assets-list">
+                        <!-- Assets carregados aparecem aqui -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO VIP -->
+            <div class="sidebar-section vip-section">
+                <div class="section-header vip-section-header" onclick="toggleSection(this)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                    <h3>🔍 SEO & Meta Tags</h3>
+                    <svg class="toggle-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <div class="vip-seo-panel">
+                        <div class="property-item">
+                            <label class="property-label">Título da Página</label>
+                            <input type="text" class="property-input" id="seoTitle" placeholder="Minha Landing Page Incrível">
+                        </div>
+                        <div class="property-item">
+                            <label class="property-label">Meta Descrição</label>
+                            <textarea class="property-textarea" id="seoDescription" rows="3" placeholder="Descrição para Google (máx. 160 caracteres)"></textarea>
+                        </div>
+                        <div class="property-item">
+                            <label class="property-label">Meta Keywords</label>
+                            <input type="text" class="property-input" id="seoKeywords" placeholder="landing page, marketing, vendas">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="vip-loading-spinner"></div>
+        <p style="font-size: 1.125rem; font-weight: 600;">Carregando Editor VIP Premium...</p>
+        <small style="opacity: 0.7;">Preparando ferramentas avançadas</small>
+    </div>
+
+    <!-- JSZip -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <!-- Editor VIP Base -->
+    <script src="editor-vip.js"></script>
+    
+    <!-- Painel de Propriedades Melhorado -->
+    <script src="editor-properties-enhanced.js"></script>
+    
+    <!-- Funcionalidades VIP Premium -->
+    <script src="editor-vip-premium.js"></script>
+</body>
+</html>
